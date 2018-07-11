@@ -18,11 +18,11 @@ class LogService
             $end_time = $strat_time + 86400;
             $pay_order_ids = OrderRecord::find()->select('id')->where([
                     'payStatus' => OrderRecord::PAY_STATUS_OK,
-                    'cancelStatus' => OrderRecord::CANCEL_STATUS_NON,
-                    'closeStatus' => OrderRecord::CLOSE_STATUS_NON,
                 ])
-                ->andWhere(['createTime' => '>=' . $strat_time])
-                ->andWhere(['createTime' => '<' . $end_time])
+                ->andWhere(['cancelStatus' => OrderRecord::CANCEL_STATUS_NON])
+                ->andWhere(['closeStatus' => OrderRecord::CLOSE_STATUS_NON])
+                ->andWhere(['>=', 'createTime', $strat_time])
+                ->andWhere(['<', 'createTime', $end_time])
                 ->asArray()
                 ->column();
 

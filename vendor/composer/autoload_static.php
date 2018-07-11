@@ -36,6 +36,7 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
             'kartik\\plugins\\dateformatter\\' => 29,
             'kartik\\datetime\\' => 16,
             'kartik\\datecontrol\\' => 19,
+            'kartik\\date\\' => 12,
             'kartik\\base\\' => 12,
         ),
         'c' => 
@@ -133,6 +134,10 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
         'kartik\\datecontrol\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-datecontrol',
+        ),
+        'kartik\\date\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-datepicker',
         ),
         'kartik\\base\\' => 
         array (

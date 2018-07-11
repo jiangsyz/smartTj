@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use \kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\search\UserSearch */
 /* @var $form yii\widgets\ActiveForm */
@@ -14,16 +14,19 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'username') ?>
-
-    <?= $form->field($model, 'auth_key') ?>
-
-    <?= $form->field($model, 'password_hash') ?>
-
-    <?= $form->field($model, 'password_reset_token') ?>
+    <div class="form-group">
+    <?php
+    echo DatePicker::widget([
+        'name' => 'dp_1',
+        'type' => DatePicker::TYPE_INPUT,
+        'value' => date('Y-m-d'),
+        'pluginOptions' => [
+            'autoclose'=>true,
+            'format' => 'yyyy-mm-dd'
+        ]
+    ]);
+    ?>
+    </div>
 
     <?php // echo $form->field($model, 'email') ?>
 
