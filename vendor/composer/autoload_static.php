@@ -7,8 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
@@ -30,6 +30,13 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'k' => 
+        array (
+            'kartik\\plugins\\dateformatter\\' => 29,
+            'kartik\\datetime\\' => 16,
+            'kartik\\datecontrol\\' => 19,
+            'kartik\\base\\' => 12,
         ),
         'c' => 
         array (
@@ -114,6 +121,22 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'kartik\\plugins\\dateformatter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/php-date-formatter',
+        ),
+        'kartik\\datetime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-datetimepicker',
+        ),
+        'kartik\\datecontrol\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-datecontrol',
+        ),
+        'kartik\\base\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base',
         ),
         'cebe\\markdown\\' => 
         array (

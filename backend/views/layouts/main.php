@@ -50,10 +50,7 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
+
     NavBar::end();
     ?>
 

@@ -256,17 +256,17 @@
     },
     {
         "name": "codeception/base",
-        "version": "2.4.2",
-        "version_normalized": "2.4.2.0",
+        "version": "2.4.3",
+        "version_normalized": "2.4.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Codeception/base.git",
-            "reference": "b41e442cbf8b7a269b74492a12fb1cf2bd06c3b8"
+            "reference": "a1416d3cd829bf8decb491143b3e8f8e02ee827f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Codeception/base/zipball/b41e442cbf8b7a269b74492a12fb1cf2bd06c3b8",
-            "reference": "b41e442cbf8b7a269b74492a12fb1cf2bd06c3b8",
+            "url": "https://api.github.com/repos/Codeception/base/zipball/a1416d3cd829bf8decb491143b3e8f8e02ee827f",
+            "reference": "a1416d3cd829bf8decb491143b3e8f8e02ee827f",
             "shasum": ""
         },
         "require": {
@@ -309,7 +309,7 @@
             "stecman/symfony-console-completion": "For BASH autocompletion",
             "symfony/phpunit-bridge": "For phpunit-bridge support"
         },
-        "time": "2018-05-26T22:24:57+00:00",
+        "time": "2018-06-26T14:35:46+00:00",
         "bin": [
             "codecept"
         ],
@@ -800,6 +800,215 @@
             "stream",
             "uri",
             "url"
+        ]
+    },
+    {
+        "name": "kartik-v/php-date-formatter",
+        "version": "v1.3.4",
+        "version_normalized": "1.3.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kartik-v/php-date-formatter.git",
+            "reference": "075cabb950ad2e2b317daf424700bf0afdc1f604"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kartik-v/php-date-formatter/zipball/075cabb950ad2e2b317daf424700bf0afdc1f604",
+            "reference": "075cabb950ad2e2b317daf424700bf0afdc1f604",
+            "shasum": ""
+        },
+        "time": "2017-01-08T09:13:05+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "kartik\\plugins\\dateformatter\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kartik Visweswaran",
+                "email": "kartikv2@gmail.com",
+                "homepage": "http://www.krajee.com/"
+            }
+        ],
+        "description": "A Javascript datetime formatting and manipulation library using PHP date-time formats.",
+        "homepage": "https://github.com/kartik-v/php-date-formatter",
+        "keywords": [
+            "date",
+            "datetime",
+            "formatter",
+            "javascript",
+            "php",
+            "php-date-formatter.js",
+            "time"
+        ]
+    },
+    {
+        "name": "kartik-v/yii2-datecontrol",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kartik-v/yii2-datecontrol.git",
+            "reference": "b22dc0b87c2ff452bdee9374d898f6cbd7d44b9d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kartik-v/yii2-datecontrol/zipball/b22dc0b87c2ff452bdee9374d898f6cbd7d44b9d",
+            "reference": "b22dc0b87c2ff452bdee9374d898f6cbd7d44b9d",
+            "shasum": ""
+        },
+        "require": {
+            "kartik-v/php-date-formatter": ">1.3",
+            "kartik-v/yii2-krajee-base": "~1.7"
+        },
+        "time": "2018-01-06T13:08:48+00:00",
+        "type": "yii2-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.9.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "kartik\\datecontrol\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kartik Visweswaran",
+                "email": "kartikv2@gmail.com",
+                "homepage": "http://www.krajee.com/"
+            }
+        ],
+        "description": "Date control module allowing separation of formats for View and Model for Yii Framework 2.0",
+        "homepage": "https://github.com/kartik-v/yii2-datecontrol",
+        "keywords": [
+            "control",
+            "date",
+            "extension",
+            "format",
+            "yii",
+            "yii2"
+        ]
+    },
+    {
+        "name": "kartik-v/yii2-krajee-base",
+        "version": "v1.8.9",
+        "version_normalized": "1.8.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kartik-v/yii2-krajee-base.git",
+            "reference": "0cafe6376780cedcd00f52c9d82b172d5851f6b0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/0cafe6376780cedcd00f52c9d82b172d5851f6b0",
+            "reference": "0cafe6376780cedcd00f52c9d82b172d5851f6b0",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2-bootstrap": "@dev"
+        },
+        "time": "2017-09-29T06:18:14+00:00",
+        "type": "yii2-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.8.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "kartik\\base\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kartik Visweswaran",
+                "email": "kartikv2@gmail.com",
+                "homepage": "http://www.krajee.com/"
+            }
+        ],
+        "description": "Base library and foundation components for all Yii2 Krajee extensions.",
+        "homepage": "https://github.com/kartik-v/yii2-krajee-base",
+        "keywords": [
+            "base",
+            "extension",
+            "foundation",
+            "krajee",
+            "widget",
+            "yii2"
+        ]
+    },
+    {
+        "name": "kartik-v/yii2-widget-datetimepicker",
+        "version": "v1.4.4",
+        "version_normalized": "1.4.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kartik-v/yii2-widget-datetimepicker.git",
+            "reference": "e843520aca008dc0807aa7ea99bfab2cc03c9a3c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/e843520aca008dc0807aa7ea99bfab2cc03c9a3c",
+            "reference": "e843520aca008dc0807aa7ea99bfab2cc03c9a3c",
+            "shasum": ""
+        },
+        "require": {
+            "kartik-v/yii2-krajee-base": "*"
+        },
+        "time": "2017-06-08T05:53:28+00:00",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "kartik\\datetime\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kartik Visweswaran",
+                "email": "kartikv2@gmail.com",
+                "homepage": "http://www.krajee.com/"
+            }
+        ],
+        "description": "Enhanced Yii2 wrapper for the bootstrap datetimepicker plugin (sub repo split from yii2-widgets)",
+        "homepage": "https://github.com/kartik-v/yii2-widget-datetimepicker",
+        "keywords": [
+            "datetime",
+            "extension",
+            "form",
+            "jquery",
+            "picker",
+            "plugin",
+            "select2",
+            "widget",
+            "yii2"
         ]
     },
     {
@@ -2259,17 +2468,17 @@
     },
     {
         "name": "swiftmailer/swiftmailer",
-        "version": "v6.0.2",
-        "version_normalized": "6.0.2.0",
+        "version": "v6.1.1",
+        "version_normalized": "6.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/swiftmailer/swiftmailer.git",
-            "reference": "412333372fb6c8ffb65496a2bbd7321af75733fc"
+            "reference": "aa899fef280b1c1aec8d5d4ac069af7f80c89a23"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/412333372fb6c8ffb65496a2bbd7321af75733fc",
-            "reference": "412333372fb6c8ffb65496a2bbd7321af75733fc",
+            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/aa899fef280b1c1aec8d5d4ac069af7f80c89a23",
+            "reference": "aa899fef280b1c1aec8d5d4ac069af7f80c89a23",
             "shasum": ""
         },
         "require": {
@@ -2280,11 +2489,15 @@
             "mockery/mockery": "~0.9.1",
             "symfony/phpunit-bridge": "~3.3@dev"
         },
-        "time": "2017-09-30T22:39:41+00:00",
+        "suggest": {
+            "ext-intl": "Needed to support internationalized email addresses",
+            "true/punycode": "Needed to support internationalized email addresses, if ext-intl is not installed"
+        },
+        "time": "2018-07-04T11:12:44+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "6.0-dev"
+                "dev-master": "6.1-dev"
             }
         },
         "installation-source": "dist",
@@ -2307,7 +2520,7 @@
             }
         ],
         "description": "Swiftmailer, free feature-rich PHP mailer",
-        "homepage": "http://swiftmailer.symfony.com",
+        "homepage": "https://swiftmailer.symfony.com",
         "keywords": [
             "email",
             "mail",
@@ -2316,17 +2529,17 @@
     },
     {
         "name": "symfony/browser-kit",
-        "version": "v4.1.0",
-        "version_normalized": "4.1.0.0",
+        "version": "v4.1.1",
+        "version_normalized": "4.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/browser-kit.git",
-            "reference": "16355a5d0f1499c77efee5ff68d8ea61624d4da1"
+            "reference": "ff9ac5d5808a530b2e7f6abcf3a2412d4f9bcd62"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/browser-kit/zipball/16355a5d0f1499c77efee5ff68d8ea61624d4da1",
-            "reference": "16355a5d0f1499c77efee5ff68d8ea61624d4da1",
+            "url": "https://api.github.com/repos/symfony/browser-kit/zipball/ff9ac5d5808a530b2e7f6abcf3a2412d4f9bcd62",
+            "reference": "ff9ac5d5808a530b2e7f6abcf3a2412d4f9bcd62",
             "shasum": ""
         },
         "require": {
@@ -2340,7 +2553,7 @@
         "suggest": {
             "symfony/process": ""
         },
-        "time": "2018-04-06T10:52:03+00:00",
+        "time": "2018-06-04T17:31:56+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2375,17 +2588,17 @@
     },
     {
         "name": "symfony/console",
-        "version": "v4.1.0",
-        "version_normalized": "4.1.0.0",
+        "version": "v4.1.1",
+        "version_normalized": "4.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/console.git",
-            "reference": "2d5d973bf9933d46802b01010bd25c800c87c242"
+            "reference": "70591cda56b4b47c55776ac78e157c4bb6c8b43f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/console/zipball/2d5d973bf9933d46802b01010bd25c800c87c242",
-            "reference": "2d5d973bf9933d46802b01010bd25c800c87c242",
+            "url": "https://api.github.com/repos/symfony/console/zipball/70591cda56b4b47c55776ac78e157c4bb6c8b43f",
+            "reference": "70591cda56b4b47c55776ac78e157c4bb6c8b43f",
             "shasum": ""
         },
         "require": {
@@ -2410,7 +2623,7 @@
             "symfony/lock": "",
             "symfony/process": ""
         },
-        "time": "2018-05-30T07:26:09+00:00",
+        "time": "2018-05-31T10:17:53+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2445,8 +2658,8 @@
     },
     {
         "name": "symfony/css-selector",
-        "version": "v4.1.0",
-        "version_normalized": "4.1.0.0",
+        "version": "v4.1.1",
+        "version_normalized": "4.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/css-selector.git",
@@ -2500,8 +2713,8 @@
     },
     {
         "name": "symfony/dom-crawler",
-        "version": "v4.1.0",
-        "version_normalized": "4.1.0.0",
+        "version": "v4.1.1",
+        "version_normalized": "4.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/dom-crawler.git",
@@ -2559,8 +2772,8 @@
     },
     {
         "name": "symfony/event-dispatcher",
-        "version": "v4.1.0",
-        "version_normalized": "4.1.0.0",
+        "version": "v4.1.1",
+        "version_normalized": "4.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/event-dispatcher.git",
@@ -2624,23 +2837,23 @@
     },
     {
         "name": "symfony/finder",
-        "version": "v4.1.0",
-        "version_normalized": "4.1.0.0",
+        "version": "v4.1.1",
+        "version_normalized": "4.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/finder.git",
-            "reference": "087e2ee0d74464a4c6baac4e90417db7477dc238"
+            "reference": "84714b8417d19e4ba02ea78a41a975b3efaafddb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/finder/zipball/087e2ee0d74464a4c6baac4e90417db7477dc238",
-            "reference": "087e2ee0d74464a4c6baac4e90417db7477dc238",
+            "url": "https://api.github.com/repos/symfony/finder/zipball/84714b8417d19e4ba02ea78a41a975b3efaafddb",
+            "reference": "84714b8417d19e4ba02ea78a41a975b3efaafddb",
             "shasum": ""
         },
         "require": {
             "php": "^7.1.3"
         },
-        "time": "2018-05-16T14:33:22+00:00",
+        "time": "2018-06-19T21:38:16+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2793,8 +3006,8 @@
     },
     {
         "name": "symfony/yaml",
-        "version": "v4.1.0",
-        "version_normalized": "4.1.0.0",
+        "version": "v4.1.1",
+        "version_normalized": "4.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",
@@ -3112,17 +3325,17 @@
     },
     {
         "name": "yiisoft/yii2-composer",
-        "version": "2.0.6",
-        "version_normalized": "2.0.6.0",
+        "version": "2.0.7",
+        "version_normalized": "2.0.7.0",
         "source": {
             "type": "git",
             "url": "https://github.com/yiisoft/yii2-composer.git",
-            "reference": "163419f1f197e02f015713b0d4f85598d8f8aa80"
+            "reference": "1439e78be1218c492e6cde251ed87d3f128b9534"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/163419f1f197e02f015713b0d4f85598d8f8aa80",
-            "reference": "163419f1f197e02f015713b0d4f85598d8f8aa80",
+            "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/1439e78be1218c492e6cde251ed87d3f128b9534",
+            "reference": "1439e78be1218c492e6cde251ed87d3f128b9534",
             "shasum": ""
         },
         "require": {
@@ -3131,7 +3344,7 @@
         "require-dev": {
             "composer/composer": "^1.0"
         },
-        "time": "2018-03-21T16:15:55+00:00",
+        "time": "2018-07-05T15:44:47+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "yii\\composer\\Plugin",

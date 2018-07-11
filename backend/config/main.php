@@ -8,11 +8,16 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'defaultRoute' => 'log',
     'name' => '正善牛肉',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'datecontrol' =>  [
+            'class' => '\kartik\datecontrol\Module',
+        ]
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
