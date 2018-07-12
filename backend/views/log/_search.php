@@ -17,9 +17,9 @@ use \kartik\date\DatePicker;
     <div class="form-group">
     <?php
     echo DatePicker::widget([
-        'name' => 'dp_1',
+        'name' => 'date',
         'type' => DatePicker::TYPE_INPUT,
-        'value' => date('Y-m-d'),
+        'value' => Yii::$app->request->get('date', date('Y-m-d')),
         'pluginOptions' => [
             'autoclose'=>true,
             'format' => 'yyyy-mm-dd'
@@ -38,7 +38,6 @@ use \kartik\date\DatePicker;
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

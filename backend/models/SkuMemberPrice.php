@@ -47,4 +47,22 @@ class SkuMemberPrice extends \yii\db\ActiveRecord
             'price' => 'Price',
         ];
     }
+
+    /**
+     * 获取sku价格
+     *
+     * @return array
+     */
+    public static function getData()
+    {
+        $data = [];
+        $tmp = self::find()->asArray()->all();
+        foreach($tmp as $v){
+            $data[$v['skuId']][$v['lv']] = $v['price'];
+        }
+        return $data;
+    }
 }
+
+
+

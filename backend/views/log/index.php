@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '今日统计';
+$this->title = '每日统计';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -33,6 +33,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'label' => '普通价',
+                'attribute' => 'price',
+                'value'     => function ($model) {
+                    return $model['price'];
+                }
+            ],
+            [
+                'label' => '会员价',
+                'attribute' => 'price_v1',
+                'value'     => function ($model) {
+                    return $model['price_v1'];
+                }
+            ],
+            [
                 'label' => '售出数量',
                 'attribute' => 'buy_count',
                 'value'     => function ($model) {
@@ -41,9 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => '收入',
-                'attribute' => 'price',
+                'attribute' => 'income',
                 'value'     => function ($model) {
-                    return $model['price'];
+                    return $model['income'];
                 }
             ],
 

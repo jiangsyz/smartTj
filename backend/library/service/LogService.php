@@ -10,11 +10,14 @@ class LogService
      *  获取今日数据统计
      *  return array
      */
-    public static function getLogByDate()
+    public static function getLogByDate($date)
     {
         try
         {
-            $strat_time = strtotime(date('Y-m-d', time()));
+            $strat_time = strtotime($date.' 00:00:00');
+            if(empty($strat_time)){
+                throw new \Exception('date error');
+            }
             $end_time = $strat_time + 86400;
             $pay_order_ids = OrderRecord::find()->select('id')->where([
                     'payStatus' => OrderRecord::PAY_STATUS_OK,
