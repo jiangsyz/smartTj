@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '商品统计';
+$this->title = 'VIP会员卡统计';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">

@@ -14,6 +14,7 @@ return array(
     'yii\\bootstrap\\' => array($vendorDir . '/yiisoft/yii2-bootstrap/src'),
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
+    'kartik\\sidenav\\' => array($vendorDir . '/kartik-v/yii2-widget-sidenav'),
     'kartik\\plugins\\dateformatter\\' => array($vendorDir . '/kartik-v/php-date-formatter'),
     'kartik\\datetime\\' => array($vendorDir . '/kartik-v/yii2-widget-datetimepicker'),
     'kartik\\datecontrol\\' => array($vendorDir . '/kartik-v/yii2-datecontrol'),

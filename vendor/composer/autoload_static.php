@@ -33,6 +33,7 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
         ),
         'k' => 
         array (
+            'kartik\\sidenav\\' => 15,
             'kartik\\plugins\\dateformatter\\' => 29,
             'kartik\\datetime\\' => 16,
             'kartik\\datecontrol\\' => 19,
@@ -122,6 +123,10 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'kartik\\sidenav\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-sidenav',
         ),
         'kartik\\plugins\\dateformatter\\' => 
         array (

@@ -35,7 +35,7 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
+  /*  $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
     ];
     if (Yii::$app->user->isGuest) {
@@ -50,10 +50,25 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'items' => $menuItems,
+    ]);*/
+
+    $menuItems = [
+        ['label' => '统计管理', 'items' => [
+            ['label' => '商品', 'url' => \yii\helpers\Url::toRoute('log/index')],
+            ['label' => '会员卡', 'url' => \yii\helpers\Url::toRoute('log/vip')],
+        ]]
+    ];
+  //  $menuItems = Helper::filter($menuItems);
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-left'],
+        'items' => $menuItems,
+    ]);
 
     NavBar::end();
     ?>
-
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
