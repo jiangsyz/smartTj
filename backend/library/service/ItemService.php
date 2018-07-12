@@ -49,40 +49,6 @@ class ItemService
         catch(\Exception $e){
             return [];
         }
-    }
-
-
-    public static function getPendingData()
-    {
-        try
-        {
-            $pay_order_ids = OrderRecord::find()->select('id')->where([
-                'payStatus' => OrderRecord::PAY_STATUS_OK,
-            ])
-                ->andWhere(['cancelStatus' => OrderRecord::CANCEL_STATUS_NON])
-                ->andWhere(['closeStatus' => OrderRecord::CLOSE_STATUS_NON])
-                ->andWhere(['deliverStatus' => OrderRecord::DELIVER_STATUS_PENDING])
-                ->asArray()
-                ->column();
-
-            if (empty($pay_order_ids)) {
-                throw new \Exception('pay_order is empty');
-            }
-            $sub_order_ids = OrderRecord::find()->select('id')->where(['parentId' => $pay_order_ids])->asArray()->column();
-            if (empty($sub_order_ids)) {
-                throw new \Exception('sub_pay_order is empty');
-            }
-            $list = Yii::$app->db->createCommand('SELECT sourceId, SUM(buyingCount) as buy_count
-              FROM order_buying_record where sourceType = 2 AND orderId IN ('.implode(', ', $sub_order_ids).') GROUP BY sourceId
-            ')->queryAll();
-            if (empty($list)) {
-                throw new \Exception('data is null');
-            }
-            return $list;
-        }
-        catch(\Exception $e){
-            return [];
-        }
-    }
+    } 
 
 }

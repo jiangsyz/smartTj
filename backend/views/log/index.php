@@ -42,31 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'label' => '普通价',
-                'attribute' => 'price',
-                'value'     => function ($model) {
-                    return $model['price'];
-                }
-            ],
-            [
-                'label' => '会员价',
-                'attribute' => 'price_v1',
-                'value'     => function ($model) {
-                    return $model['price_v1'];
-                }
-            ],
-            [
                 'label' => '库存',
                 'attribute' => 'name',
                 'value'     => function ($model) {
                     return $model['count'];
-                }
-            ],
-            [
-                'label' => '待发货数',
-                'attribute' => 'pending_count',
-                'value'     => function ($model) {
-                    return $model['pending_count'];
                 }
             ],
             [

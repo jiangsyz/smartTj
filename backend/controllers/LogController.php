@@ -19,30 +19,22 @@ class LogController extends Controller
     public function actionIndex()
     {
         $date = $this->getGet('date', date('Y-m-d'));
-        $skus = Sku::find()->asArray()->all();
-        $sku_ids = $spu_ids = $log_data = $pending_data = [];
+        # 获取销售数据
+        $list = ItemService::getLogByDate($date);
+        $spu_ids = $log_data = $pending_data = [];
+        foreach ($list as $v) {
+            $log_data[$v['sourceId']] = $v;
+        }
+        $sku_ids = array_keys($log_data);
+        $skus = Sku::find()->where(['id'=>$sku_ids])->asArray()->all();
         foreach ($skus as $sku) {
-            $sku_ids[] = $sku['id'];
             $spu_ids[] = $sku['spuId'];
         }
 
         # 获取sku的spu名
         $spus = Spu::find()->select('id,title')->where(['id' => $spu_ids])->indexBy('id')->asArray()->all();
 
-        # 获取销售数据
-        $list = ItemService::getLogByDate($date);
-        foreach ($list as $v) {
-            $log_data[$v['sourceId']] = $v;
-        }
-
-        # 获取待发货数量
-        $sku_pending_data = ItemService::getPendingData($date);
-        foreach ($sku_pending_data as $v) {
-            $pending_data[$v['sourceId']] = $v;
-        }
-
         # 获取sku价格
-        $sku_price = SkuMemberPrice::getData();
         $total_income = $total_buy_count = 0;
         foreach ($skus as $k => $sku) {
             $skus[$k]['name'] = ArrayHelper::getValue($spus, $sku['spuId'] . '.title', '') . $sku['title'];
@@ -56,9 +48,6 @@ class LogController extends Controller
             $skus[$k]['buy_count'] = $buy_count;
             $total_buy_count += $buy_count;
 
-            $skus[$k]['price'] = ArrayHelper::getValue($sku_price, $sku['id'] . '.0', 0);
-            $skus[$k]['price_v1'] = ArrayHelper::getValue($sku_price, $sku['id'] . '.1', 0);
-            $skus[$k]['pending_count'] = ArrayHelper::getValue($pending_data, $sku['id'] . '.buy_count', 0);
         }
 
         return $this->render('index', [
