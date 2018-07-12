@@ -93,4 +93,13 @@ return array (
       '@kartik/sidenav' => $vendorDir . '/kartik-v/yii2-widget-sidenav',
     ),
   ),
+  'kartik-v/yii2-context-menu' => 
+  array (
+    'name' => 'kartik-v/yii2-context-menu',
+    'version' => '1.2.2.0',
+    'alias' => 
+    array (
+      '@kartik/cmenu' => $vendorDir . '/kartik-v/yii2-context-menu',
+    ),
+  ),
 );

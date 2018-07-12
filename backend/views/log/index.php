@@ -12,24 +12,33 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php  echo $this->render('_search', []); ?>
+    <?php
+        echo $this->render('_search', []); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
       //  'filterModel' => $searchModel,
         'columns' => [
             [
+                'label' => 'Sku Id',
+                'attribute' => 'id',
+                'value'     => function ($model) {
+                    return $model['id'];
+                }
+            ],
+            [
+                'label' => 'SPu Id',
+                'attribute' => 'spu_id',
+                'value'     => function ($model) {
+                    return $model['spu_id'];
+                }
+            ],
+            [
                 'label' => '产品名',
                 'attribute' => 'name',
                 'value'     => function ($model) {
                     return $model['name'];
-                }
-            ],
-            [
-                'label' => '上架数量',
-                'attribute' => 'name',
-                'value'     => function ($model) {
-                    return $model['count'];
                 }
             ],
             [
@@ -44,6 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'price_v1',
                 'value'     => function ($model) {
                     return $model['price_v1'];
+                }
+            ],
+            [
+                'label' => '库存',
+                'attribute' => 'name',
+                'value'     => function ($model) {
+                    return $model['count'];
                 }
             ],
             [

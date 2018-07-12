@@ -18,7 +18,7 @@ use \kartik\date\DatePicker;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-    <div class="form-group">
+    <div style="float: left; margin-right: 5px" class="form-group">
        <!-- <label class="control-label" for="w1">选择日期:</label>-->
     <?php
     echo DatePicker::widget([

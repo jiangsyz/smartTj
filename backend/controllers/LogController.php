@@ -44,7 +44,8 @@ class LogController extends Controller
         # 获取sku价格
         $sku_price = SkuMemberPrice::getData();
         foreach ($skus as $k => $sku) {
-            $skus[$k]['name'] = ArrayHelper::getValue($spus, $sku['id'] . '.title', '') . $sku['title'];
+            $skus[$k]['name'] = ArrayHelper::getValue($spus, $sku['spuId'] . '.title', '') . $sku['title'];
+            $skus[$k]['spu_id'] = ArrayHelper::getValue($spus, $sku['spuId'] . '.id', 0);
             $skus[$k]['income'] = ArrayHelper::getValue($log_data, $sku['id'] . '.price', 0);
             $skus[$k]['buy_count'] = ArrayHelper::getValue($log_data, $sku['id'] . '.buy_count', 0);
             $skus[$k]['price'] = ArrayHelper::getValue($sku_price, $sku['id'] . '.0', 0);
