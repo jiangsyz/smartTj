@@ -19,6 +19,8 @@ class LogController extends Controller
     public function actionIndex()
     {
         $date = $this->getGet('date', date('Y-m-d'));
+        # 获取实收
+        $amount = ItemService::getTotalPriceByDate($date, 2);
         # 获取销售数据
         $list = ItemService::getLogByDate($date);
         $spu_ids = $log_data = $pending_data = [];
@@ -26,15 +28,14 @@ class LogController extends Controller
             $log_data[$v['sourceId']] = $v;
         }
         $sku_ids = array_keys($log_data);
-        $skus = Sku::find()->where(['id'=>$sku_ids])->asArray()->all();
+        $skus = Sku::find()->where(['id' => $sku_ids])->asArray()->all();
+
+        # 获取sku的spu名
         foreach ($skus as $sku) {
             $spu_ids[] = $sku['spuId'];
         }
-
-        # 获取sku的spu名
         $spus = Spu::find()->select('id,title')->where(['id' => $spu_ids])->indexBy('id')->asArray()->all();
 
-        # 获取sku价格
         $total_income = $total_buy_count = 0;
         foreach ($skus as $k => $sku) {
             $skus[$k]['name'] = ArrayHelper::getValue($spus, $sku['spuId'] . '.title', '') . $sku['title'];
@@ -47,11 +48,10 @@ class LogController extends Controller
             $buy_count = ArrayHelper::getValue($log_data, $sku['id'] . '.buy_count', 0);
             $skus[$k]['buy_count'] = $buy_count;
             $total_buy_count += $buy_count;
-
         }
 
         return $this->render('index', [
-            //  'searchModel' => $searchModel,
+            'amount' => $amount,
             'total_income' => $total_income,
             'total_buy_count' => $total_buy_count,
             'dataProvider' => new ArrayDataProvider([
@@ -68,9 +68,10 @@ class LogController extends Controller
 
     public function actionVip()
     {
-        $date = $this->getGet('date',date('Y-m-d'));
-        $vip_cards =  VirtualItem::find()->asArray()->all();
-
+        $date = $this->getGet('date', date('Y-m-d'));
+        # 获取实收
+        $amount = ItemService::getTotalPriceByDate($date, 7);
+        $vip_cards = VirtualItem::find()->asArray()->all();
         $log_data = [];
         # 获取销售数据
         $list = VipService::getLogByDate($date);
@@ -78,7 +79,7 @@ class LogController extends Controller
             $log_data[$v['sourceId']] = $v;
         }
         $total_income = $total_buy_count = 0;
-        foreach($vip_cards as $k=>$card){
+        foreach ($vip_cards as $k => $card) {
             $income = ArrayHelper::getValue($log_data, $card['id'] . '.price', 0);
             $vip_cards[$k]['income'] = $income;
             $total_income += $income;
@@ -90,12 +91,13 @@ class LogController extends Controller
 
         return $this->render('vip', [
             //  'searchModel' => $searchModel,
+            'amount' => $amount,
             'total_income' => $total_income,
             'total_buy_count' => $total_buy_count,
             'dataProvider' => new ArrayDataProvider([
                 'allModels' => $vip_cards,
                 'sort' => [
-                   'attributes' => ['income', 'buy_count'],
+                    'attributes' => ['income', 'buy_count'],
                 ],
                 'pagination' => [
                     'pageSize' => $this->limit,

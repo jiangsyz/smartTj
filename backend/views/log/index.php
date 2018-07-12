@@ -15,23 +15,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
         echo $this->render('_search', []);
     ?>
-    <div class="well">售出总数:<span style="font-weight: bolder"><?=$total_buy_count;?></span> 总收入:<span style="font-weight: bolder"><?=$total_income;?></span></div>
+    <div class="well">售出总数:<span style="font-weight: bolder"><?=$total_buy_count;?></span> 总应收:<span style="font-weight: bolder"><?=$total_income;?></span> 总实收:<span style="font-weight: bolder"><?=$amount;?></span></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
       //  'filterModel' => $searchModel,
         'columns' => [
             [
-                'label' => 'Sku Id',
-                'attribute' => 'id',
-                'value'     => function ($model) {
-                    return $model['id'];
-                }
-            ],
-            [
                 'label' => 'SPu Id',
                 'attribute' => 'spu_id',
                 'value'     => function ($model) {
                     return $model['spu_id'];
+                }
+            ],
+            [
+                'label' => 'Sku Id',
+                'attribute' => 'id',
+                'value'     => function ($model) {
+                    return $model['id'];
                 }
             ],
             [
