@@ -7,7 +7,11 @@ use \kartik\date\DatePicker;
 /* @var $model app\models\search\UserSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<style>
+    #w1{
+        width: 100px;
+    }
+</style>
 <div class="user-search">
 
     <?php $form = ActiveForm::begin([
@@ -15,6 +19,7 @@ use \kartik\date\DatePicker;
         'method' => 'get',
     ]); ?>
     <div class="form-group">
+       <!-- <label class="control-label" for="w1">选择日期:</label>-->
     <?php
     echo DatePicker::widget([
         'name' => 'date',
@@ -27,6 +32,7 @@ use \kartik\date\DatePicker;
     ]);
     ?>
     </div>
+
 
     <?php // echo $form->field($model, 'email') ?>
 
