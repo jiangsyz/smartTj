@@ -4,11 +4,13 @@ use app\models\OrderBuyingRecord;
 use app\models\OrderRecord;
 use Yii;
 
-class LogService
+class ItemService
 {
     /**
-     *  获取今日数据统计
-     *  return array
+     * 获取商品统计
+     *
+     * @param $date
+     * @return array
      */
     public static function getLogByDate($date)
     {
@@ -37,7 +39,7 @@ class LogService
                 throw new \Exception('sub_pay_order is empty');
             }
             $list = Yii::$app->db->createCommand('SELECT sourceId,SUM(finalPrice*buyingCount) as price, SUM(buyingCount) as buy_count
-              FROM order_buying_record where sourceType = 2 AND orderId IN ('.implode(', ', $sub_order_ids).') GROUP BY sourceId ORDER BY price DESC
+              FROM order_buying_record where sourceType = 2 AND orderId IN ('.implode(', ', $sub_order_ids).') GROUP BY sourceId
             ')->queryAll();
             if (empty($list)) {
                 throw new \Exception('data is null');

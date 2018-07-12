@@ -20,37 +20,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'label' => '产品名',
-                'attribute' => 'name',
+                'attribute' => 'title',
                 'value'     => function ($model) {
-                    return $model['name'];
+                    return $model['title'];
                 }
             ],
             [
-                'label' => '上架数量',
-                'attribute' => 'name',
-                'value'     => function ($model) {
-                    return $model['count'];
-                }
-            ],
-            [
-                'label' => '普通价',
+                'label' => '价格',
                 'attribute' => 'price',
                 'value'     => function ($model) {
                     return $model['price'];
-                }
-            ],
-            [
-                'label' => '会员价',
-                'attribute' => 'price_v1',
-                'value'     => function ($model) {
-                    return $model['price_v1'];
-                }
-            ],
-            [
-                'label' => '待发货数',
-                'attribute' => 'pending_count',
-                'value'     => function ($model) {
-                    return $model['pending_count'];
                 }
             ],
             [
