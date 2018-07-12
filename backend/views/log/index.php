@@ -13,9 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
-        echo $this->render('_search', []); 
+        echo $this->render('_search', []);
     ?>
-
+    <div class="well">售出总数:<span style="font-weight: bolder"><?=$total_buy_count;?></span> 总收入:<span style="font-weight: bolder"><?=$total_income;?></span></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
       //  'filterModel' => $searchModel,

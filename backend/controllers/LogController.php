@@ -18,7 +18,7 @@ class LogController extends Controller
 
     public function actionIndex()
     {
-        $date = $this->getGet('date',date('Y-m-d'));
+        $date = $this->getGet('date', date('Y-m-d'));
         $skus = Sku::find()->asArray()->all();
         $sku_ids = $spu_ids = $log_data = $pending_data = [];
         foreach ($skus as $sku) {
@@ -43,11 +43,19 @@ class LogController extends Controller
 
         # 获取sku价格
         $sku_price = SkuMemberPrice::getData();
+        $total_income = $total_buy_count = 0;
         foreach ($skus as $k => $sku) {
             $skus[$k]['name'] = ArrayHelper::getValue($spus, $sku['spuId'] . '.title', '') . $sku['title'];
             $skus[$k]['spu_id'] = ArrayHelper::getValue($spus, $sku['spuId'] . '.id', 0);
-            $skus[$k]['income'] = ArrayHelper::getValue($log_data, $sku['id'] . '.price', 0);
-            $skus[$k]['buy_count'] = ArrayHelper::getValue($log_data, $sku['id'] . '.buy_count', 0);
+
+            $income = ArrayHelper::getValue($log_data, $sku['id'] . '.price', 0);
+            $skus[$k]['income'] = $income;
+            $total_income += $income;
+
+            $buy_count = ArrayHelper::getValue($log_data, $sku['id'] . '.buy_count', 0);
+            $skus[$k]['buy_count'] = $buy_count;
+            $total_buy_count += $buy_count;
+
             $skus[$k]['price'] = ArrayHelper::getValue($sku_price, $sku['id'] . '.0', 0);
             $skus[$k]['price_v1'] = ArrayHelper::getValue($sku_price, $sku['id'] . '.1', 0);
             $skus[$k]['pending_count'] = ArrayHelper::getValue($pending_data, $sku['id'] . '.buy_count', 0);
@@ -55,6 +63,8 @@ class LogController extends Controller
 
         return $this->render('index', [
             //  'searchModel' => $searchModel,
+            'total_income' => $total_income,
+            'total_buy_count' => $total_buy_count,
             'dataProvider' => new ArrayDataProvider([
                 'allModels' => $skus,
                 'sort' => [
@@ -78,14 +88,21 @@ class LogController extends Controller
         foreach ($list as $v) {
             $log_data[$v['sourceId']] = $v;
         }
-
+        $total_income = $total_buy_count = 0;
         foreach($vip_cards as $k=>$card){
-            $vip_cards[$k]['income'] = ArrayHelper::getValue($log_data, $card['id'] . '.price', 0);
-            $vip_cards[$k]['buy_count'] = ArrayHelper::getValue($log_data, $card['id'] . '.buy_count', 0);
+            $income = ArrayHelper::getValue($log_data, $card['id'] . '.price', 0);
+            $vip_cards[$k]['income'] = $income;
+            $total_income += $income;
+
+            $buy_count = ArrayHelper::getValue($log_data, $card['id'] . '.buy_count', 0);
+            $vip_cards[$k]['buy_count'] = $buy_count;
+            $total_buy_count += $buy_count;
         }
 
         return $this->render('vip', [
             //  'searchModel' => $searchModel,
+            'total_income' => $total_income,
+            'total_buy_count' => $total_buy_count,
             'dataProvider' => new ArrayDataProvider([
                 'allModels' => $vip_cards,
                 'sort' => [

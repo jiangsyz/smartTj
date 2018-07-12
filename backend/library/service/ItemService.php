@@ -52,23 +52,16 @@ class ItemService
     }
 
 
-    public static function getPendingData($date)
+    public static function getPendingData()
     {
         try
         {
-            $strat_time = strtotime($date.' 00:00:00');
-            if(empty($strat_time)){
-                throw new \Exception('date error');
-            }
-            $end_time = $strat_time + 86400;
             $pay_order_ids = OrderRecord::find()->select('id')->where([
                 'payStatus' => OrderRecord::PAY_STATUS_OK,
             ])
                 ->andWhere(['cancelStatus' => OrderRecord::CANCEL_STATUS_NON])
                 ->andWhere(['closeStatus' => OrderRecord::CLOSE_STATUS_NON])
                 ->andWhere(['deliverStatus' => OrderRecord::DELIVER_STATUS_PENDING])
-                ->andWhere(['>=', 'createTime', $strat_time])
-                ->andWhere(['<', 'createTime', $end_time])
                 ->asArray()
                 ->column();
 
