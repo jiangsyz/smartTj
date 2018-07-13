@@ -77,11 +77,15 @@ class OrderService extends Service
     public static function getHourIncomeByDate($date)
     {
         $return = [];
+        $tmp_income = 0;
         $data = self::getPayOrderByDate($date);
         for($i = 0;$i<24;$i++){
-            $return[$i] = ArrayHelper::getValue($data, $i, 0);
+            $hour_income = ArrayHelper::getValue($data, $i, 0);
+            $return[$i] = $hour_income + $tmp_income;
+            $tmp_income += $hour_income;
         }
         return $return;
+
     }
 
     public static function getPayOrderByDate($date)
