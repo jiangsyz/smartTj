@@ -15,8 +15,7 @@ class ItemService
     public static function getLogByDate($date)
     {
         try
-        {
-            throw new \Exception('pay_order is empty');
+        { 
             $strat_time = strtotime($date.' 00:00:00');
             if(empty($strat_time)){
                 throw new \Exception('date error');
