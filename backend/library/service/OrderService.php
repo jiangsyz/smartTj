@@ -3,6 +3,7 @@ namespace backend\library\service;
 
 use app\models\OrderBuyingRecord;
 use app\models\OrderRecord;
+use yii\helpers\ArrayHelper;
 
 class OrderService extends Service
 {
@@ -16,24 +17,24 @@ class OrderService extends Service
     public static function getTotalPriceByDate($date,$type = 2)
     {
         try {
-            $strat_time = strtotime($date . ' 00:00:00');
-            if (empty($strat_time)) {
+            $start_time = strtotime($date . ' 00:00:00');
+            if (empty($start_time)) {
                 throw new \Exception('date error');
             }
-            $end_time = $strat_time + 86400;
+            $end_time = $start_time + 86400;
             $tmp = OrderRecord::find()->select('id,finalPrice')->where([
                 'payStatus' => OrderRecord::PAY_STATUS_OK,
             ])
                 ->andWhere(['cancelStatus' => OrderRecord::CANCEL_STATUS_NON])
                 ->andWhere(['closeStatus' => OrderRecord::CLOSE_STATUS_NON])
-                ->andWhere(['>=', 'createTime', $strat_time])
+                ->andWhere(['>=', 'createTime', $start_time])
                 ->andWhere(['<', 'createTime', $end_time])
                 ->asArray()
                 ->all();
             if (empty($tmp)) {
                 throw new \Exception('pay_order is empty');
             }
-            $final_price_data_tmp = [];
+            $final_price_data_tmp = $pay_order_ids = [];
             foreach ($tmp as $v) {
                 $pay_order_ids[] = $v['id'];
                 $final_price_data_tmp[$v['id']] = $v['finalPrice'];
@@ -64,4 +65,55 @@ class OrderService extends Service
             return 0;
         }
     }
+
+
+    /**
+     * 获取某天小时数据
+     *
+     * @param $date
+     * @return array
+     * @throws \Exception
+     */
+    public static function getHourIncomeByDate($date)
+    {
+        $return = [];
+        $data = self::getPayOrderByDate($date);
+        for($i = 0;$i<24;$i++){
+            $return[$i] = ArrayHelper::getValue($data, $i, 0);
+        }
+        return $return;
+    }
+
+    public static function getPayOrderByDate($date)
+    {
+        $start_time = strtotime($date . ' 00:00:00');
+        if (empty($start_time)) {
+            throw new \Exception('date error');
+        }
+        $end_time = $start_time + 86400;
+
+        $data = [];
+        $r = \Yii::$app->db->createCommand('SELECT SUM(pay) as income,date_format(FROM_UNIXTIME(createTime, :createTime), \'%H\') AS hour
+            FROM order_record
+            WHERE (payStatus= :payStatus)
+            AND (cancelStatus = :cancelStatus)
+            AND (closeStatus= :closeStatus)
+            AND (createTime >= :start_time)
+            AND (createTime < :end_time) GROUP BY hour',
+            [
+                ':createTime' => '%Y-%m-%d %H:%i:%s',
+                ':payStatus' => OrderRecord::PAY_STATUS_OK,
+                ':cancelStatus' => OrderRecord::CANCEL_STATUS_NON,
+                ':closeStatus' => OrderRecord::CLOSE_STATUS_NON,
+                ':start_time' => $start_time,
+                ':end_time' => $end_time,
+            ]
+        )->queryAll();
+        foreach($r as $k=>$v){
+            $data[(int)$v['hour']] = $v['income'];
+        }
+
+        return $data;
+    }
+
 }

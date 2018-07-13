@@ -44,12 +44,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <canvas height="100"  id="myChart"  ></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <?php
-for($i=0;$i<24;$i++){
-    $data[] = $i;
-    $today[] = $i*2;
-    $yestoday[] = $i;
-}
-
+$hours = array_keys($today_hour_income);
+$today_income = array_values($today_hour_income);
+$yesterday_hour_income = array_values($yesterday_hour_income);
 ?>
 <script>
     var ctx = document.getElementById("myChart");
@@ -59,21 +56,21 @@ for($i=0;$i<24;$i++){
 
         // The data for our dataset
         data: {
-            labels: <?php echo json_encode($data);?>,
+            labels: <?php echo json_encode($hours);?>,
             datasets: [
                 {
                     label: "今日",
                     backgroundColor: [
                         'rgba(61, 133, 198, 0.5)',
                     ],
-                    data: <?php echo json_encode($today);?>
+                    data: <?php echo json_encode($today_income);?>
                 },
                 {
                     label: "昨日",
                     backgroundColor: [
                         'rgba(221, 126, 107, 0.5)',
                     ],
-                    data: <?php echo json_encode($yestoday);?>
+                    data: <?php echo json_encode($yesterday_hour_income);?>
                 }
             ]
         },
