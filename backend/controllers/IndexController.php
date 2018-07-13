@@ -2,9 +2,9 @@
 
 namespace backend\controllers;
 
-use app\models\OrderRecord;
+use backend\library\BaseController as Controller;
 
-class IndexController extends \yii\web\Controller
+class IndexController extends Controller
 {
     public function actionIndex()
     {
