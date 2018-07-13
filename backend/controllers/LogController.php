@@ -2,11 +2,11 @@
 namespace backend\controllers;
 
 use app\models\Sku;
-use app\models\SkuMemberPrice;
 use app\models\Spu;
 use app\models\VirtualItem;
 use backend\library\BaseController as Controller;
 use backend\library\service\ItemService;
+use backend\library\service\OrderService;
 use backend\library\service\VipService;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -20,7 +20,7 @@ class LogController extends Controller
     {
         $date = $this->getGet('date', date('Y-m-d'));
         # 获取实收
-        $amount = ItemService::getTotalPriceByDate($date, 2);
+        $amount = OrderService::getTotalPriceByDate($date, 2);
         # 获取销售数据
         $list = ItemService::getLogByDate($date);
         $spu_ids = $log_data = $pending_data = [];
@@ -70,7 +70,7 @@ class LogController extends Controller
     {
         $date = $this->getGet('date', date('Y-m-d'));
         # 获取实收
-        $amount = ItemService::getTotalPriceByDate($date, 7);
+        $amount = OrderService::getTotalPriceByDate($date, 7);
         $vip_cards = VirtualItem::find()->asArray()->all();
         $log_data = [];
         # 获取销售数据

@@ -3,7 +3,7 @@ namespace backend\library\service;
 use app\models\OrderRecord;
 use Yii;
 
-class VipService
+class VipService extends Service
 {
     /**
      * 获取会员卡统计
