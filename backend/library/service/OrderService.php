@@ -14,7 +14,7 @@ class OrderService extends Service
      * @param int $type
      * @return int
      */
-    public static function getTotalPriceByDate($date,$type = 2)
+    public static function getTotalPriceByDate($date, $type = 2)
     {
         try {
             $start_time = strtotime($date . ' 00:00:00');
@@ -129,12 +129,52 @@ class OrderService extends Service
         $return = [];
         $tmp_income = 0;
         $data = self::getHourPayOrderByDate($date);
-        for($i = 0;$i<24;$i++){
+        for ($i = 0; $i < 24; $i++) {
             $hour_income = ArrayHelper::getValue($data, $i, 0);
             $return[$i] = $hour_income + $tmp_income;
             $tmp_income += $hour_income;
         }
         return $return;
+    }
+
+    public static function getDateIncomeByRange($start_date, $end_date)
+    {
+        $return = [];
+        $start_time = strtotime($start_date);
+        $end_time = strtotime($end_date);
+        if ($end_time < $start_time) $end_time = $start_time;
+        $data = self::getDayIncome($start_time, $end_time + 86400);
+        while ($start_time <= $end_time) {
+            $date = date('Y-m-d', $start_time);
+            $return[$date] = ArrayHelper::getValue($data, $date, 0);
+            $start_time = $start_time + 86400;
+        }
+        return $return;
+    }
+
+    public static function getDayIncome($start_time, $end_time)
+    {
+        $data = [];
+        $r = \Yii::$app->db->createCommand('SELECT SUM(PAY) as income, date_format(FROM_UNIXTIME(createTime, :createTime), \'%Y-%m-%d\') AS day
+            FROM order_record
+            WHERE (payStatus= :payStatus)
+            AND (cancelStatus = :cancelStatus)
+            AND (closeStatus= :closeStatus)
+            AND (createTime >= :start_time)
+            AND (createTime < :end_time) GROUP BY day',
+            [
+                ':createTime' => '%Y-%m-%d %H:%i:%s',
+                ':payStatus' => OrderRecord::PAY_STATUS_OK,
+                ':cancelStatus' => OrderRecord::CANCEL_STATUS_NON,
+                ':closeStatus' => OrderRecord::CLOSE_STATUS_NON,
+                ':start_time' => $start_time,
+                ':end_time' => $end_time,
+            ]
+        )->queryAll();
+        foreach ($r as $k => $v) {
+            $data[$v['day']] = $v['income'] / 100;
+        }
+        return $data;
     }
 
     /**
@@ -158,7 +198,7 @@ class OrderService extends Service
             ->andWhere(['<', 'createTime', $end_time])
             ->asArray()
             ->one();
-        return !empty($data) ? $data['pay']/100 : 0;
+        return !empty($data) ? $data['pay'] / 100 : 0;
     }
 
     public static function getHourPayOrderByDate($date)
@@ -186,8 +226,8 @@ class OrderService extends Service
                 ':end_time' => $end_time,
             ]
         )->queryAll();
-        foreach($r as $k=>$v){
-            $data[(int)$v['hour']] = $v['income']/100;
+        foreach ($r as $k => $v) {
+            $data[(int)$v['hour']] = $v['income'] / 100;
         }
 
         return $data;

@@ -9,6 +9,10 @@ use yii\grid\GridView;
 $this->title = '今日统计';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="page-header">
+    <h1>实时概况
+    </h1>
+</div>
 <div class="user-index">
     <div class="row">
         <div class="col-sm-3">
@@ -62,11 +66,17 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-<canvas height="100"  id="myChart"  ></canvas>
+<canvas height="100"  id="chart1"  ></canvas>
+<div class="page-header">
+    <h1>核心指标
+    </h1>
+</div>
+<canvas height="100"  id="chart2"  ></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
 <?php
 $hours = array_keys($today_hour_income);
+$days = array_keys($day_income);
+
 $today_income = array_values($today_hour_income);
 $yesterday_hour_income = array_values($yesterday_hour_income);
 $H = date('H');
@@ -75,10 +85,11 @@ foreach($today_income as $k=>$v){
         unset($today_income[$k]);
     }
 }
+
 ?>
 <script>
-    var ctx = document.getElementById("myChart");
-    var chart = new Chart(ctx, {
+    var ctx = document.getElementById("chart1");
+    new Chart(ctx, {
         // The type of chart we want to create
         type: 'line',
 
@@ -108,6 +119,25 @@ foreach($today_income as $k=>$v){
                     }
                 }]
             }
+        }
+    });
+
+    var ctx2 = document.getElementById("chart2");
+    new Chart(ctx2, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: <?php echo json_encode($days);?>,
+            datasets: [
+                {
+                    label: "每日收入",
+                    borderColor: 'rgba(221, 126, 107)',
+                    fill: false,
+                    data: <?php echo json_encode(array_values($day_income));?>
+                },
+            ]
         }
     });
 </script>

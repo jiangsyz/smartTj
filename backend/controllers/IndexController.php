@@ -23,13 +23,17 @@ class IndexController extends Controller
         $pay_count = OrderService::getPayTotalByDate($today);
         # 客单价
         $single_price = !empty($pay_count) && !empty($member_count) ? round($pay_count/$member_count,2) : 0;
+        # 每日收入
+        $day_income = OrderService::getDateIncomeByRange(date('Y-m-d',strtotime("-4 day")),date('Y-m-d'));
+
         return $this->render('index', compact(
                 'today_hour_income',
                 'yesterday_hour_income',
                 'order_count',
                 'member_count',
                 'pay_count',
-                'single_price'
+                'single_price',
+                'day_income'
             )
         );
     }
