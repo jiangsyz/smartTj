@@ -57,6 +57,7 @@ AppAsset::register($this);
 
     $menuItems = [
         ['label' => '统计管理', 'items' => [
+            ['label' => '首页', 'url' => \yii\helpers\Url::toRoute('index/index')],
             ['label' => '商品', 'url' => \yii\helpers\Url::toRoute('log/index')],
             ['label' => '会员卡', 'url' => \yii\helpers\Url::toRoute('log/vip')],
         ]]

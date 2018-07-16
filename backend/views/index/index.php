@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '统计';
+$this->title = '今日统计';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3><i class="glyphicon glyphicon-yen"></i> 付款金额 : <?=$pay_count?></h3>
+                    <h3><i class="glyphicon glyphicon-yen"></i> 付款金额 : <?=sprintf("%.2f",$pay_count)?></h3>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3><i class="glyphicon glyphicon-align-left"></i> 客单价 : <?=$single_price?></h3>
+                    <h3><i class="glyphicon glyphicon-align-left"></i> 客单价 : <?=sprintf("%.2f",$single_price)?></h3>
                 </div>
             </div>
         </div>
@@ -69,7 +69,12 @@ $this->params['breadcrumbs'][] = $this->title;
 $hours = array_keys($today_hour_income);
 $today_income = array_values($today_hour_income);
 $yesterday_hour_income = array_values($yesterday_hour_income);
- 
+$H = date('H');
+foreach($today_income as $k=>$v){
+    if($H<$k){
+        unset($today_income[$k]);
+    }
+}
 ?>
 <script>
     var ctx = document.getElementById("myChart");
