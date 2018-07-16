@@ -66,6 +66,56 @@ class OrderService extends Service
         }
     }
 
+    /**
+     * 获取某日付款订单总数
+     *
+     * @param $date
+     * @return int|string
+     * @throws \Exception
+     */
+    public static function getOrderCountBy($date)
+    {
+        $start_time = strtotime($date . ' 00:00:00');
+        if (empty($start_time)) {
+            throw new \Exception('date error');
+        }
+        $end_time = $start_time + 86400;
+        $count = OrderRecord::find()->where([
+            'payStatus' => OrderRecord::PAY_STATUS_OK,
+        ])
+            ->andWhere(['cancelStatus' => OrderRecord::CANCEL_STATUS_NON])
+            ->andWhere(['closeStatus' => OrderRecord::CLOSE_STATUS_NON])
+            ->andWhere(['>=', 'createTime', $start_time])
+            ->andWhere(['<', 'createTime', $end_time])
+            ->count();
+        return $count;
+    }
+
+    /**
+     * 获取付款人数
+     *
+     * @param $date
+     * @return int|string
+     * @throws \Exception
+     */
+    public static function getMemberCountByDate($date)
+    {
+        $start_time = strtotime($date . ' 00:00:00');
+        if (empty($start_time)) {
+            throw new \Exception('date error');
+        }
+        $end_time = $start_time + 86400;
+        $count = OrderRecord::find()->select('memberId')->distinct()->where([
+            'payStatus' => OrderRecord::PAY_STATUS_OK,
+        ])
+            ->andWhere(['cancelStatus' => OrderRecord::CANCEL_STATUS_NON])
+            ->andWhere(['closeStatus' => OrderRecord::CLOSE_STATUS_NON])
+            ->andWhere(['>=', 'createTime', $start_time])
+            ->andWhere(['<', 'createTime', $end_time])
+            ->count();
+        return $count;
+    }
+
 
     /**
      * 获取某天小时数据
@@ -78,17 +128,40 @@ class OrderService extends Service
     {
         $return = [];
         $tmp_income = 0;
-        $data = self::getPayOrderByDate($date);
+        $data = self::getHourPayOrderByDate($date);
         for($i = 0;$i<24;$i++){
             $hour_income = ArrayHelper::getValue($data, $i, 0);
             $return[$i] = $hour_income + $tmp_income;
             $tmp_income += $hour_income;
         }
         return $return;
-
     }
 
-    public static function getPayOrderByDate($date)
+    /**
+     * 获取付款金额
+     *
+     * @param $date
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getPayTotalByDate($date)
+    {
+        $start_time = strtotime($date . ' 00:00:00');
+        if (empty($start_time)) {
+            throw new \Exception('date error');
+        }
+        $end_time = $start_time + 86400;
+        $data = OrderRecord::find()->select('SUM(pay) as pay')->where(['payStatus' => OrderRecord::PAY_STATUS_OK,])
+            ->andWhere(['cancelStatus' => OrderRecord::CANCEL_STATUS_NON])
+            ->andWhere(['closeStatus' => OrderRecord::CLOSE_STATUS_NON])
+            ->andWhere(['>=', 'createTime', $start_time])
+            ->andWhere(['<', 'createTime', $end_time])
+            ->asArray()
+            ->one();
+        return !empty($data) ? $data['pay']/100 : 0;
+    }
+
+    public static function getHourPayOrderByDate($date)
     {
         $start_time = strtotime($date . ' 00:00:00');
         if (empty($start_time)) {
@@ -114,7 +187,7 @@ class OrderService extends Service
             ]
         )->queryAll();
         foreach($r as $k=>$v){
-            $data[(int)$v['hour']] = $v['income'];
+            $data[(int)$v['hour']] = $v['income']/100;
         }
 
         return $data;
