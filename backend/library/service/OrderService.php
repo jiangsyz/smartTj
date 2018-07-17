@@ -137,12 +137,22 @@ class OrderService extends Service
         return $return;
     }
 
+    /**
+     * 日期范围获取收入
+     *
+     * @param $start_date
+     * @param $end_date
+     * @return array
+     */
     public static function getDateIncomeByRange($start_date, $end_date)
     {
         $return = [];
         $start_time = strtotime($start_date);
         $end_time = strtotime($end_date);
         if ($end_time < $start_time) $end_time = $start_time;
+        if ($end_time - $start_time > 31 * 86400) {
+            return [];
+        }
         $data = self::getDayIncome($start_time, $end_time + 86400);
         while ($start_time <= $end_time) {
             $date = date('Y-m-d', $start_time);

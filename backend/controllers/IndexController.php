@@ -24,7 +24,7 @@ class IndexController extends Controller
         # 客单价
         $single_price = !empty($pay_count) && !empty($member_count) ? round($pay_count/$member_count,2) : 0;
 
-        $start_date = $this->getGet('start_date',date('Y-m-d'));
+        $start_date = $this->getGet('start_date',date('Y-m-d',strtotime("-7 day")));
         $end_date = $this->getGet('end_date',date('Y-m-d'));
         if (strtotime($end_date) > time()) {
             $end_date = date('Y-m-d');
