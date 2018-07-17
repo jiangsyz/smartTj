@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\widgets\ActiveForm;
+use \kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -71,6 +72,50 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1>核心指标
     </h1>
 </div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h4>选择日期</h4>
+    </div>
+    <div class="panel-footer"><div class="user-search">
+            <?php $form = ActiveForm::begin([
+                'action' => ['index'],
+                'method' => 'get',
+            ]); ?>
+            <div style="float: left; margin-right: 5px" class="form-group">
+                <?php
+                echo DatePicker::widget([
+                    'name' => 'start_date',
+                    'type' => DatePicker::TYPE_INPUT,
+                    'value' => Yii::$app->request->get('start_date', date('Y-m-d')),
+                    'pluginOptions' => [
+                        'autoclose'=>true,
+                        'format' => 'yyyy-mm-dd'
+                    ]
+                ]);
+                ?>
+            </div>
+            <div style="float: left; margin-right: 5px; margin-top:5px;" class="form-group">至</div>
+            <div style="float: left; margin-right: 5px" class="form-group">
+                <?php
+                echo DatePicker::widget([
+                    'name' => 'end_date',
+                    'type' => DatePicker::TYPE_INPUT,
+                    'value' => Yii::$app->request->get('end_date', date('Y-m-d')),
+                    'pluginOptions' => [
+                        'autoclose'=>true,
+                        'format' => 'yyyy-mm-dd'
+                    ]
+                ]);
+                ?>
+            </div>
+            <div class="form-group">
+                <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div></div>
+</div>
+
+
 <canvas height="100"  id="chart2"  ></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <?php
@@ -138,6 +183,15 @@ foreach($today_income as $k=>$v){
                     data: <?php echo json_encode(array_values($day_income));?>
                 },
             ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
         }
     });
 </script>

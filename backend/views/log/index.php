@@ -15,7 +15,30 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
         echo $this->render('_search', []);
     ?>
-    <div class="well">售出总数:<span style="font-weight: bolder"><?=$total_buy_count;?></span> 总应收:<span style="font-weight: bolder"><?=$total_income;?></span> 总实收:<span style="font-weight: bolder"><?=$amount;?></span></div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div  id="w6" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3> 售出总数 : <?=$total_buy_count;?></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div id="w6" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3> 总应收 : <?=$total_income;?></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div id="w6" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3> 总实收 : <?=$amount;?></h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
       //  'filterModel' => $searchModel,
