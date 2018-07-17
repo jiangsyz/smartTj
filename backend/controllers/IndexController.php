@@ -39,7 +39,9 @@ class IndexController extends Controller
                 'member_count',
                 'pay_count',
                 'single_price',
-                'day_income'
+                'day_income',
+                'start_date',
+                'end_date'
             )
         );
     }

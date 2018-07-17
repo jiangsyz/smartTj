@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo DatePicker::widget([
                     'name' => 'start_date',
                     'type' => DatePicker::TYPE_INPUT,
-                    'value' => Yii::$app->request->get('start_date', date('Y-m-d')),
+                    'value' => Yii::$app->request->get('start_date', $start_date),
                     'pluginOptions' => [
                         'autoclose'=>true,
                         'format' => 'yyyy-mm-dd'
@@ -100,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo DatePicker::widget([
                     'name' => 'end_date',
                     'type' => DatePicker::TYPE_INPUT,
-                    'value' => Yii::$app->request->get('end_date', date('Y-m-d')),
+                    'value' => Yii::$app->request->get('end_date', $end_date),
                     'pluginOptions' => [
                         'autoclose'=>true,
                         'format' => 'yyyy-mm-dd'
