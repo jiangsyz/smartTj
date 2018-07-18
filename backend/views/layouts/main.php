@@ -54,17 +54,36 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
     ]);*/
+    if (!Yii::$app->user->isGuest){
+        $menuItems = [
+            ['label' => '统计管理', 'items' => [
+                ['label' => '首页', 'url' => \yii\helpers\Url::toRoute('index/index')],
+                ['label' => '商品', 'url' => \yii\helpers\Url::toRoute('log/index')],
+                ['label' => '会员卡', 'url' => \yii\helpers\Url::toRoute('log/vip')],
+            ]]
+        ];
+        //  $menuItems = Helper::filter($menuItems);
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-left'],
+            'items' => $menuItems,
+        ]);
+    }
 
-    $menuItems = [
-        ['label' => '统计管理', 'items' => [
-            ['label' => '首页', 'url' => \yii\helpers\Url::toRoute('index/index')],
-            ['label' => '商品', 'url' => \yii\helpers\Url::toRoute('log/index')],
-            ['label' => '会员卡', 'url' => \yii\helpers\Url::toRoute('log/vip')],
-        ]]
-    ];
-  //  $menuItems = Helper::filter($menuItems);
+    $menuItems = [];
+    if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+    } else {
+        $menuItems[] = '<li>'
+            . Html::beginForm(['/site/logout'], 'post')
+            . Html::submitButton(
+                'Logout (' . Yii::$app->user->identity->username . ')',
+                ['class' => 'btn btn-link logout']
+            )
+            . Html::endForm()
+            . '</li>';
+    }
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-left'],
+        'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
     ]);
 

@@ -27,6 +27,11 @@ class User extends \yii\db\ActiveRecord
         return 'user';
     }
 
+    public static function getDb()
+    {
+        return Yii::$app->get('tj');
+    }
+
     /**
      * {@inheritdoc}
      */
