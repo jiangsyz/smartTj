@@ -20,7 +20,7 @@ class UserController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    { 
+    {
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
