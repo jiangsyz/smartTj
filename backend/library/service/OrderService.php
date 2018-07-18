@@ -11,10 +11,10 @@ class OrderService extends Service
      * 获取实收
      *
      * @param $date
-     * @param int $type
-     * @return int
+     * @param int $isNeedAddress
+     * @return int|mixed
      */
-    public static function getTotalPriceByDate($date, $type = 2)
+    public static function getTotalPriceByDate($date, $isNeedAddress = 1)
     {
         try {
             $start_time = strtotime($date . ' 00:00:00');
@@ -22,45 +22,21 @@ class OrderService extends Service
                 throw new \Exception('date error');
             }
             $end_time = $start_time + 86400;
-            $tmp = OrderRecord::find()->select('id,finalPrice')->where([
+            $tmp = OrderRecord::find()->select('sum(finalPrice) as total')->where([
                 'payStatus' => OrderRecord::PAY_STATUS_OK,
             ])
                 ->andWhere(['cancelStatus' => OrderRecord::CANCEL_STATUS_NON])
                 ->andWhere(['closeStatus' => OrderRecord::CLOSE_STATUS_NON])
                 ->andWhere(['>=', 'createTime', $start_time])
                 ->andWhere(['<', 'createTime', $end_time])
+                ->andWhere(['isNeedAddress' => $isNeedAddress])
                 ->asArray()
-                ->all();
-            if (empty($tmp)) {
+                ->one();
+            if (empty($tmp['total'])) {
+
                 throw new \Exception('pay_order is empty');
             }
-            $final_price_data_tmp = $pay_order_ids = [];
-            foreach ($tmp as $v) {
-                $pay_order_ids[] = $v['id'];
-                $final_price_data_tmp[$v['id']] = $v['finalPrice'];
-            }
-
-            $tmp = OrderRecord::find()->select('id,parentId')->where(['parentId' => $pay_order_ids])->asArray()->all();
-            foreach ($tmp as $v) {
-                if (!empty($final_price_data_tmp[$v['parentId']])) {
-                    $sub_order_ids[] = $v['id'];
-                    # 子订单号和主订单的实付绑定
-                    $final_price_data[$v['id']] = $final_price_data_tmp[$v['parentId']];
-                }
-            }
-
-            if (empty($sub_order_ids)) {
-                throw new \Exception('sub_pay_order is empty');
-            }
-            $tmpIds = OrderBuyingRecord::find()->select('orderId')->where(['orderId' => $sub_order_ids])->andWhere(['sourceType' => $type])->groupBy('orderId')->column();
-            $return = 0;
-            foreach ($tmpIds as $v) {
-                if (!empty($final_price_data[$v])) {
-                    $return += $final_price_data[$v];
-                }
-            }
-
-            return $return;
+            return ArrayHelper::getValue($tmp, 'total', 0);
         } catch (\Exception $e) {
             return 0;
         }

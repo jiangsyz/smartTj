@@ -48,6 +48,9 @@ class OrderRecord extends \yii\db\ActiveRecord
     const DELIVER_STATUS_OK = 2;
     const DELIVER_STATUS_FINISHED = 3;
 
+    const NEED_ADDRESS = 1;
+    const NOT_NEED_ADDRESS = 0;
+
     /**
      * {@inheritdoc}
      */

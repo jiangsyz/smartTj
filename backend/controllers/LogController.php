@@ -20,7 +20,7 @@ class LogController extends Controller
     {
         $date = $this->getGet('date', date('Y-m-d'));
         # 获取实收
-        $amount = OrderService::getTotalPriceByDate($date, 2);
+        $amount = OrderService::getTotalPriceByDate($date, 1);
         # 获取销售数据
         $list = ItemService::getLogByDate($date);
         $spu_ids = $log_data = $pending_data = [];
@@ -70,7 +70,7 @@ class LogController extends Controller
     {
         $date = $this->getGet('date', date('Y-m-d'));
         # 获取实收
-        $amount = OrderService::getTotalPriceByDate($date, 7);
+        $amount = OrderService::getTotalPriceByDate($date, 0); 
         $vip_cards = VirtualItem::find()->asArray()->all();
         $log_data = [];
         # 获取销售数据
