@@ -142,7 +142,7 @@ class LogController extends Controller
         $objPhpExcel->getActiveSheet()->setCellValue('B1', '商品编码');
         $objPhpExcel->getActiveSheet()->setCellValue('C1', '商品标题');
         $objPhpExcel->getActiveSheet()->setCellValue('D1', '商品价格');
-        $objPhpExcel->getActiveSheet()->setCellValue('E1', '付款件数');
+        $objPhpExcel->getActiveSheet()->setCellValue('E1', '商品付款件数');
 
         //子产品清算明细
         $i = 1;
@@ -159,6 +159,7 @@ class LogController extends Controller
         $objWriter = \PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel5');
 
         // $objWriter->save($fileName);
+        ob_end_clean();
         header("Pragma: public");
         header("Expires: 0");
         header("Cache-Control:must-revalidate, post-check=0, pre-check=0");

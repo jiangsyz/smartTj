@@ -31,7 +31,7 @@ use \kartik\date\DatePicker;
         ]
     ]);
     ?>
-    </div> 
+    </div>
 
     <?php // echo $form->field($model, 'email') ?>
 
