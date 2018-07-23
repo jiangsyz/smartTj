@@ -150,7 +150,7 @@ class LogController extends Controller
         {
             $i++;
             $objPhpExcel->getActiveSheet()->setCellValue('A' . $i, $date );
-            $objPhpExcel->getActiveSheet()->setCellValue('B' . $i, $val['uniqueId'],\PHPExcel_Cell_DataType::TYPE_STRING);
+            $objPhpExcel->getActiveSheet()->setCellValueExplicit('B' . $i, $val['uniqueId'],\PHPExcel_Cell_DataType::TYPE_STRING);
             $objPhpExcel->getActiveSheet()->setCellValue('C' . $i, $val["name"]);
             $objPhpExcel->getActiveSheet()->setCellValue('D' . $i,  $val["price"]);
             $objPhpExcel->getActiveSheet()->setCellValue('E' . $i, $val["buy_count"]);
