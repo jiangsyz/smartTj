@@ -31,8 +31,7 @@ use \kartik\date\DatePicker;
         ]
     ]);
     ?>
-    </div>
-
+    </div> 
 
     <?php // echo $form->field($model, 'email') ?>
 
@@ -42,10 +41,12 @@ use \kartik\date\DatePicker;
 
     <?php // echo $form->field($model, 'updated_at') ?>
 
-    <div class="form-group">
+    <div style="float: left; margin-right: 10px;" class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
     </div>
-
+    <div class="form-group">
+        <?= Html::a('导出Excel', ['log/index', 'format' => 'excel', 'date' => Yii::$app->request->get('date', date('Y-m-d')) ], ['class' => 'btn btn-success']) ?>
+    </div>
     <?php ActiveForm::end(); ?>
 
 </div>

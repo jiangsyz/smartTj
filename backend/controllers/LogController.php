@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use app\models\Sku;
+use app\models\SkuMemberPrice;
 use app\models\Spu;
 use app\models\VirtualItem;
 use backend\library\BaseController as Controller;
@@ -19,6 +20,7 @@ class LogController extends Controller
     public function actionIndex()
     {
         $date = $this->getGet('date', date('Y-m-d'));
+        $format = $this->getGet('format','');
         # 获取实收
         $amount = OrderService::getTotalPriceByDate($date, 1);
         # 获取销售数据
@@ -38,6 +40,8 @@ class LogController extends Controller
 
         $total_income = $total_buy_count = 0;
         foreach ($skus as $k => $sku) {
+            $sku_price = SkuMemberPrice::find()->where(['skuId'=> $sku['id']])->andWhere(['lv' => 1])->asArray()->one();
+            $skus[$k]['price'] = ArrayHelper::getValue($sku_price, 'price', 0);
             $skus[$k]['name'] = ArrayHelper::getValue($spus, $sku['spuId'] . '.title', '') . $sku['title'];
             $skus[$k]['spu_id'] = ArrayHelper::getValue($spus, $sku['spuId'] . '.id', 0);
 
@@ -50,20 +54,24 @@ class LogController extends Controller
             $total_buy_count += $buy_count;
         }
 
-        return $this->render('index', [
-            'amount' => $amount,
-            'total_income' => $total_income,
-            'total_buy_count' => $total_buy_count,
-            'dataProvider' => new ArrayDataProvider([
-                'allModels' => $skus,
-                'sort' => [
-                    'attributes' => ['income', 'buy_count'],
-                ],
-                'pagination' => [
-                    'pageSize' => $this->limit,
-                ],
-            ]),
-        ]);
+        if($format == 'excel'){
+             $this->outputExcel($skus,$date);
+        }else{
+            return $this->render('index', [
+                'amount' => $amount,
+                'total_income' => $total_income,
+                'total_buy_count' => $total_buy_count,
+                'dataProvider' => new ArrayDataProvider([
+                    'allModels' => $skus,
+                    'sort' => [
+                        'attributes' => ['income', 'buy_count'],
+                    ],
+                    'pagination' => [
+                        'pageSize' => $this->limit,
+                    ],
+                ]),
+            ]);
+        }
     }
 
     public function actionVip()
@@ -104,5 +112,62 @@ class LogController extends Controller
                 ],
             ]),
         ]);
+    }
+
+    public function outputExcel($skus,$date)
+    {
+        $objPhpExcel = new \PHPExcel();
+        $fileName = '正善小程序销量'.$date. '.xls';
+
+        //设值
+        $objPhpExcel->getProperties()->setCreator("zs")
+            ->setLastModifiedBy("zs")
+            ->setTitle('正善小程序销量')
+            ->setSubject("")
+            ->setDescription("")
+            ->setKeywords("")
+            ->setCategory("");
+
+        $objActSheet = $objPhpExcel->getActiveSheet();
+
+
+        //设置宽度
+        $objActSheet->getColumnDimension('A')->setWidth(25);
+        $objActSheet->getColumnDimension('B')->setWidth(25);
+        $objActSheet->getColumnDimension('C')->setWidth(25);
+        $objActSheet->getColumnDimension('D')->setWidth(25);
+        $objActSheet->getColumnDimension('E')->setWidth(25);
+
+        $objPhpExcel->getActiveSheet()->setCellValue('A1', '日期');
+        $objPhpExcel->getActiveSheet()->setCellValue('B1', '商品编码');
+        $objPhpExcel->getActiveSheet()->setCellValue('C1', '商品标题');
+        $objPhpExcel->getActiveSheet()->setCellValue('D1', '商品价格');
+        $objPhpExcel->getActiveSheet()->setCellValue('E1', '付款件数');
+
+        //子产品清算明细
+        $i = 1;
+        foreach($skus as $val)
+        {
+            $i++;
+            $objPhpExcel->getActiveSheet()->setCellValue('A' . $i, $date );
+            $objPhpExcel->getActiveSheet()->setCellValue('B' . $i, $val['uniqueId']);
+            $objPhpExcel->getActiveSheet()->setCellValue('C' . $i, $val["name"]);
+            $objPhpExcel->getActiveSheet()->setCellValue('D' . $i,  $val["price"]);
+            $objPhpExcel->getActiveSheet()->setCellValue('E' . $i, $val["buy_count"]);
+        }
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel5');
+
+        // $objWriter->save($fileName);
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
+        header("Content-Type:application/force-download");
+        header("Content-Type:application/vnd.ms-execl");
+        header("Content-Type:application/octet-stream");
+        header("Content-Type:application/download");
+        header('Content-Disposition:attachment;filename="' . $fileName . '"');
+        header("Content-Transfer-Encoding:binary");
+        $objWriter->save('php://output');
     }
 }
