@@ -15,7 +15,6 @@ use yii\helpers\ArrayHelper;
 
 class LogController extends Controller
 {
-    public $limit = 1000;
 
     public function actionIndex()
     {

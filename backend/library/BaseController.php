@@ -7,6 +7,7 @@ use \Yii;
 
 class BaseController  extends Controller{
 
+    public $limit = 10000;
     public function behaviors()
     {
         return [
