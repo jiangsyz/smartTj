@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 use backend\library\BaseController as Controller;
+use backend\library\service\ItemService;
 use Yii;
 use yii\data\ArrayDataProvider;
 
@@ -9,23 +10,7 @@ class GoodsController extends Controller
     public function actionPendingOrder()
     {
         $format = $this->getGet('format', '');
-        //todo 性能问题 待修改
-        $data = Yii::$app->db->createCommand("
-            select CONCAT(e.title,d.title) as name,d.uniqueId,d.count,sum(a.buyingCount) as buy_count
-            from sku as d
-            left join order_buying_record as a on d.id=a.sourceId
-            left join order_record as c on c.id=a.orderId
-            left join order_record as b on b.id=c.parentId
-            left join spu as e on e.id=d.spuId
-            where a.sourceType=2
-            and b.deliverStatus<>3
-            and b.cancelStatus=0
-            and b.payStatus=1
-            and b.closeStatus=0
-            and b.finishStatus<>1
-            and a.logisticsCode is null
-            group by d.id")->queryAll();
-
+        $data = ItemService::getPendingData(); 
         if ($format == 'excel') {
             $objPhpExcel = new \PHPExcel();
             $fileName = '小程序待发货商品.xls';
