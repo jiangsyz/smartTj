@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
                     <h3><i class="glyphicon glyphicon-yen"></i> 付款金额 : <?=sprintf("%.2f",$pay_count)?></h3>
