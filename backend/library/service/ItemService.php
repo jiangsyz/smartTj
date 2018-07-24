@@ -57,11 +57,11 @@ class ItemService extends Service
     public static function getPendingData()
     {
         $pay_order_ids = OrderRecord::find()
-            ->where(['<>','deliverStatus',3])
+            ->where([ 'deliverStatus' => 0])
             ->andWhere(['cancelStatus' => 0])
             ->andWhere(['payStatus' => 1])
             ->andWhere(['closeStatus' => 0])
-            ->andWhere(['<>' ,'finishStatus', 1])
+            ->andWhere(['finishStatus' => 0])
             ->asArray()
             ->column();
         if (empty($pay_order_ids)) {
