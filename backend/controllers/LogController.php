@@ -84,7 +84,7 @@ class LogController extends Controller
         $date = $this->getGet('date', date('Y-m-d'));
         # 获取实收
         $amount = OrderService::getTotalPriceByDate($date, 0);
-        $vip_cards = VirtualItem::find()->asArray()->all();
+        $vip_cards = VirtualItem::find()->where(['closed' => 0])->asArray()->all();
         $log_data = [];
         # 获取销售数据
         $list = VipService::getLogByDate($date);
