@@ -97,7 +97,7 @@ class ItemService extends Service
             }
             $list = Yii::$app->db->createCommand('SELECT sourceId, SUM(buyingCount) as buy_count
               FROM order_buying_record where sourceType = 2 AND orderId IN (' . implode(', ', $sub_order_ids) . ') GROUP BY sourceId
-            ')->queryAll();
+            ')->queryAll(); 
             $pending_data = [];
             foreach ($list as $v) {
                 $pending_data[$v['sourceId']] = $v['buy_count'];
@@ -131,8 +131,9 @@ class ItemService extends Service
             if (empty($sub_order_ids)) {
                 throw new \Exception('sub_pay_order is empty');
             }
+
             $list = Yii::$app->db->createCommand('SELECT sourceId, SUM(buyingCount) as buy_count
-              FROM order_buying_record where logisticsCode = null and sourceType = 2 AND orderId IN (' . implode(', ', $sub_order_ids) . ') GROUP BY sourceId
+              FROM order_buying_record where logisticsCode is NULL  and sourceType = 2 AND orderId IN (' . implode(', ', $sub_order_ids) . ') GROUP BY sourceId
             ')->queryAll();
             $prepare_data = [];
             foreach ($list as $v) {
