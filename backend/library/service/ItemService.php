@@ -113,7 +113,7 @@ class ItemService extends Service
             }
             $end_time = $start_time + 86400;
             $data = Refund::find()->select('sum(price) as count')->where([
-                'status' => 3,
+                'status' => 2,
             ])
                 ->andWhere(['>=', 'applyTime', $start_time])
                 ->andWhere(['<', 'applyTime', $end_time])
