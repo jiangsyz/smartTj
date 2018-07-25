@@ -117,7 +117,7 @@ class ItemService extends Service
     {
         try {
             $pay_order_ids = OrderRecord::find()
-                ->where(['deliverStatus' => 1])
+                ->where(['>', 'deliverStatus', 0])
                 ->andWhere(['cancelStatus' => 0])
                 ->andWhere(['payStatus' => 1])
                 ->andWhere(['closeStatus' => 0])
