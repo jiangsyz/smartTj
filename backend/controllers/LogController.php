@@ -15,6 +15,7 @@ use yii\helpers\ArrayHelper;
 
 class LogController extends Controller
 {
+    protected $excel_title;
 
     public function actionIndex()
     {
@@ -52,11 +53,15 @@ class LogController extends Controller
             $skus[$k]['buy_count'] = $buy_count;
             $total_buy_count += $buy_count;
         }
+        # 获取当日退款金额
+        $total_refund = ItemService::getRefundCount($date);
 
         if($format == 'excel'){
+             $this->excel_title = '正善小程序商品销量';
              $this->outputExcel($skus,$date);
         }else{
             return $this->render('index', [
+                'total_refund' => $total_refund,
                 'amount' => $amount,
                 'total_income' => $total_income,
                 'total_buy_count' => $total_buy_count,
@@ -75,9 +80,10 @@ class LogController extends Controller
 
     public function actionVip()
     {
+        $format = $this->getGet('format', '');
         $date = $this->getGet('date', date('Y-m-d'));
         # 获取实收
-        $amount = OrderService::getTotalPriceByDate($date, 0); 
+        $amount = OrderService::getTotalPriceByDate($date, 0);
         $vip_cards = VirtualItem::find()->asArray()->all();
         $log_data = [];
         # 获取销售数据
@@ -94,34 +100,42 @@ class LogController extends Controller
             $buy_count = ArrayHelper::getValue($log_data, $card['id'] . '.buy_count', 0);
             $vip_cards[$k]['buy_count'] = $buy_count;
             $total_buy_count += $buy_count;
+            if ($format == 'excel') {
+                $vip_cards[$k]['name'] = $card['title'];
+                $vip_cards[$k]['uniqueId'] = '';
+            }
         }
-
-        return $this->render('vip', [
-            //  'searchModel' => $searchModel,
-            'amount' => $amount,
-            'total_income' => $total_income,
-            'total_buy_count' => $total_buy_count,
-            'dataProvider' => new ArrayDataProvider([
-                'allModels' => $vip_cards,
-                'sort' => [
-                    'attributes' => ['income', 'buy_count'],
-                ],
-                'pagination' => [
-                    'pageSize' => $this->limit,
-                ],
-            ]),
-        ]);
+        if ($format == 'excel') {
+            $this->excel_title = '正善小程序会员卡销量';
+            $this->outputExcel($vip_cards, $date);
+        } else {
+            return $this->render('vip', [
+                //  'searchModel' => $searchModel,
+                'amount' => $amount,
+                'total_income' => $total_income,
+                'total_buy_count' => $total_buy_count,
+                'dataProvider' => new ArrayDataProvider([
+                    'allModels' => $vip_cards,
+                    'sort' => [
+                        'attributes' => ['income', 'buy_count'],
+                    ],
+                    'pagination' => [
+                        'pageSize' => $this->limit,
+                    ],
+                ]),
+            ]);
+        }
     }
 
     public function outputExcel($skus,$date)
     {
         $objPhpExcel = new \PHPExcel();
-        $fileName = '正善小程序销量'.$date. '.xls';
+        $fileName = $this->excel_title.$date. '.xls';
 
         //设值
         $objPhpExcel->getProperties()->setCreator("zs")
             ->setLastModifiedBy("zs")
-            ->setTitle('正善小程序销量')
+            ->setTitle($this->excel_title)
             ->setSubject("")
             ->setDescription("")
             ->setKeywords("")

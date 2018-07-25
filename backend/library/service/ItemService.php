@@ -1,6 +1,7 @@
 <?php
 namespace backend\library\service;
 use app\models\OrderRecord;
+use app\models\Refund;
 use app\models\Sku;
 use app\models\Spu;
 use Yii;
@@ -18,17 +19,17 @@ class ItemService extends Service
     {
         try
         {
-            $strat_time = strtotime($date.' 00:00:00');
-            if(empty($strat_time)){
+            $start_time = strtotime($date.' 00:00:00');
+            if(empty($start_time)){
                 throw new \Exception('date error');
             }
-            $end_time = $strat_time + 86400;
+            $end_time = $start_time + 86400;
             $pay_order_ids = OrderRecord::find()->select('id')->where([
                     'payStatus' => OrderRecord::PAY_STATUS_OK,
                 ])
                 ->andWhere(['cancelStatus' => OrderRecord::CANCEL_STATUS_NON])
                 ->andWhere(['closeStatus' => OrderRecord::CLOSE_STATUS_NON])
-                ->andWhere(['>=', 'createTime', $strat_time])
+                ->andWhere(['>=', 'createTime', $start_time])
                 ->andWhere(['<', 'createTime', $end_time])
                 ->asArray()
                 ->column();
@@ -93,6 +94,36 @@ class ItemService extends Service
             return $skus;
         } catch (\Exception $e) {
             return [];
+        }
+    }
+
+    /**
+     * 获取每日退款总额
+     *
+     * @param $date
+     * @return int|mixed
+     */
+    public static function getRefundCount($date)
+    {
+        try
+        {
+            $start_time = strtotime($date.' 00:00:00');
+            if(empty($start_time)){
+                throw new \Exception('date error');
+            }
+            $end_time = $start_time + 86400;
+            $data = Refund::find()->select('sum(price) as count')->where([
+                'status' => 3,
+            ])
+                ->andWhere(['>=', 'applyTime', $start_time])
+                ->andWhere(['<', 'applyTime', $end_time])
+                ->asArray()
+                ->one();
+            return (empty($data['count'])) ? 0 : $data['count'];
+        }
+        catch(\Exception $e){
+
+            return 0;
         }
     }
 

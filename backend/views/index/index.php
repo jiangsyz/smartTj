@@ -19,49 +19,49 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-3">
             <div  id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3><i class="glyphicon glyphicon-user"></i> 访客数 : ?</h3>
+                    <h3>访客数 : ?</h3>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3><i class="glyphicon glyphicon-user"></i> 浏览量 : ?</h3>
+                    <h3>浏览量 : ?</h3>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3><i class="glyphicon glyphicon-fire"></i> 付款笔数 : <?=$order_count?></h3>
+                    <h3>付款笔数 : <?=$order_count?></h3>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3><i class="glyphicon glyphicon-user"></i> 付款人数 : <?=$member_count?></h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div id="w6" class="panel panel-default">
-                <div class="panel-heading">
-                    <h3><i class="glyphicon glyphicon-yen"></i> 付款金额 : <?=sprintf("%.2f",$pay_count)?></h3>
+                    <h3>付款人数 : <?=$member_count?></h3>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3><i class="glyphicon glyphicon-yen"></i> 转化率 : ?</h3>
+                    <h3>付款金额 : <?=sprintf("%.2f",$pay_count)?></h3>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3><i class="glyphicon glyphicon-align-left"></i> 客单价 : <?=sprintf("%.2f",$single_price)?></h3>
+                    <h3>转化率 : ?</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div id="w6" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>客单价 : <?=sprintf("%.2f",$single_price)?></h3>
                 </div>
             </div>
         </div>
