@@ -54,10 +54,28 @@ class ItemService extends Service
         }
     }
 
+    public static function getStockData()
+    {
+        try {
+            $pending_data = self::getPendingData();
+            $prepare_data = self::getPrepareData();
+            $skus = Sku::find()->asArray()->all();
+            $spu = Spu::find()->select('id,title')->asArray()->indexBy('id')->all();
+            foreach ($skus as $k => $sku) {
+                $skus[$k]['name'] = ArrayHelper::getValue($spu[$sku['spuId']], 'title', '') . $sku['title'];
+                $skus[$k]['buy_count'] = ArrayHelper::getValue($pending_data, $sku['id'], 0);
+                $skus[$k]['prepare_count'] = ArrayHelper::getValue($prepare_data, $sku['id'], 0);
+            }
+            return $skus;
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
     /**
      * 获取待发货数据
      *
-     * @return array|\yii\db\ActiveRecord[]
+     * @return array
      */
     public static function getPendingData()
     {
@@ -84,14 +102,43 @@ class ItemService extends Service
             foreach ($list as $v) {
                 $pending_data[$v['sourceId']] = $v['buy_count'];
             }
+            return $pending_data;
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
 
-            $skus = Sku::find()->asArray()->all();
-            $spu = Spu::find()->select('id,title')->asArray()->indexBy('id')->all();
-            foreach ($skus as $k => $sku) {
-                $skus[$k]['name'] = ArrayHelper::getValue($spu[$sku['spuId']], 'title', '') . $sku['title'];
-                $skus[$k]['buy_count'] = ArrayHelper::getValue($pending_data, $sku['id'], 0);
+    /**
+     * 获取准备发货
+     *
+     * @return array
+     */
+    public static function getPrepareData()
+    {
+        try {
+            $pay_order_ids = OrderRecord::find()
+                ->where(['deliverStatus' => 1])
+                ->andWhere(['cancelStatus' => 0])
+                ->andWhere(['payStatus' => 1])
+                ->andWhere(['closeStatus' => 0])
+                ->andWhere(['finishStatus' => 0])
+                ->asArray()
+                ->column();
+            if (empty($pay_order_ids)) {
+                throw new \Exception('pay_order is empty');
             }
-            return $skus;
+            $sub_order_ids = OrderRecord::find()->select('id')->where(['parentId' => $pay_order_ids])->asArray()->column();
+            if (empty($sub_order_ids)) {
+                throw new \Exception('sub_pay_order is empty');
+            }
+            $list = Yii::$app->db->createCommand('SELECT sourceId, SUM(buyingCount) as buy_count
+              FROM order_buying_record where logisticsCode = null and sourceType = 2 AND orderId IN (' . implode(', ', $sub_order_ids) . ') GROUP BY sourceId
+            ')->queryAll();
+            $prepare_data = [];
+            foreach ($list as $v) {
+                $prepare_data[$v['sourceId']] = $v['buy_count'];
+            }
+            return $prepare_data;
         } catch (\Exception $e) {
             return [];
         }

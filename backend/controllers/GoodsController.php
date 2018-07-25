@@ -7,10 +7,10 @@ use yii\data\ArrayDataProvider;
 
 class GoodsController extends Controller
 {
-    public function actionPendingOrder()
+    public function actionStock()
     {
         $format = $this->getGet('format', '');
-        $data = ItemService::getPendingData(); 
+        $data = ItemService::getStockData();
         if ($format == 'excel') {
             $objPhpExcel = new \PHPExcel();
             $fileName = '小程序待发货商品.xls';
@@ -32,11 +32,13 @@ class GoodsController extends Controller
             $objActSheet->getColumnDimension('B')->setWidth(25);
             $objActSheet->getColumnDimension('C')->setWidth(25);
             $objActSheet->getColumnDimension('D')->setWidth(25);
+            $objActSheet->getColumnDimension('E')->setWidth(25);
 
             $objPhpExcel->getActiveSheet()->setCellValue('A1', '商品名称');
             $objPhpExcel->getActiveSheet()->setCellValue('B1', '商品编码');
             $objPhpExcel->getActiveSheet()->setCellValue('C1', '库存');
             $objPhpExcel->getActiveSheet()->setCellValue('D1', '待发货数量');
+            $objPhpExcel->getActiveSheet()->setCellValue('E1', '配货中数量');
 
             //子产品清算明细
             $i = 1;
@@ -46,6 +48,7 @@ class GoodsController extends Controller
                 $objPhpExcel->getActiveSheet()->setCellValueExplicit('B' . $i, $val['uniqueId'], \PHPExcel_Cell_DataType::TYPE_STRING);
                 $objPhpExcel->getActiveSheet()->setCellValue('C' . $i, $val["count"]);
                 $objPhpExcel->getActiveSheet()->setCellValue('D' . $i, $val["buy_count"]);
+                $objPhpExcel->getActiveSheet()->setCellValue('E' . $i, $val["prepare_count"]);
             }
 
             $objWriter = \PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel5');
@@ -67,7 +70,7 @@ class GoodsController extends Controller
                 'dataProvider' => new ArrayDataProvider([
                     'allModels' => $data,
                     'sort' => [
-                        'attributes' => ['buy_count'],
+                        'attributes' => ['buy_count','prepare_count'],
                     ],
                     'pagination' => [
                         'pageSize' => $this->limit,
