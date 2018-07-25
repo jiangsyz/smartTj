@@ -119,7 +119,7 @@ class ItemService extends Service
                 ->andWhere(['<', 'applyTime', $end_time])
                 ->asArray()
                 ->one();
-            return (empty($data['count'])) ? 0 : $data['count'];
+            return (empty($data['count'])) ? 0 : $data['count']/100;
         }
         catch(\Exception $e){
 
