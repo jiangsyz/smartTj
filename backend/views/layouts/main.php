@@ -57,12 +57,32 @@ AppAsset::register($this);
     if (!Yii::$app->user->isGuest){
         $menuItems = [
             ['label' => '统计管理', 'items' => [
-                ['label' => '首页', 'url' => \yii\helpers\Url::toRoute('index/index')],
-                ['label' => '商品', 'url' => \yii\helpers\Url::toRoute('log/index')],
-                ['label' => '会员卡', 'url' => \yii\helpers\Url::toRoute('log/vip')],
-                ['label' => '库存', 'url' => \yii\helpers\Url::toRoute('goods/stock')],
-            ]]
+                ['label' => '首页', 'url' => '/index/index'],
+                ['label' => '商品', 'url' => '/log/index'],
+                ['label' => '会员卡', 'url' => '/log/vip'],
+                ['label' => '库存', 'url' => '/goods/stock'],
+            ]],
+            ['label' => '权限管理', 'items' => [
+                ['label' => '用户管理', 'url' => '/user/index'],
+                ['label' => '路由设置', 'url' => '/rbac/route'],
+                ['label' => '权限设置', 'url' => '/rbac/permission'],
+                ['label' => '角色设置', 'url' => '/rbac/role'],
+                ['label' => '角色分配', 'url' => '/rbac/assignment'],
+            ]],
         ];
+        if (Yii::$app->user->id != 2) {
+            foreach ($menuItems as $key => $item) {
+                foreach ($item['items'] as $key2 => $row) {
+                    if (!Yii::$app->user->can($row['url'])) {
+                        unset($menuItems[$key]['items'][$key2]);
+                    }
+                    if(empty($menuItems[$key]['items'])){
+                        unset($menuItems[$key]);
+                    }
+                }
+            }
+        }
+
         //  $menuItems = Helper::filter($menuItems);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-left'],

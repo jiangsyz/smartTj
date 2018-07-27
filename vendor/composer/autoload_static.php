@@ -20,12 +20,14 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
         'y' => 
         array (
             'yii\\swiftmailer\\' => 16,
+            'yii\\jui\\' => 8,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
             'yii\\debug\\' => 10,
             'yii\\composer\\' => 13,
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
+            'yii2mod\\rbac\\' => 13,
         ),
         'p' => 
         array (
@@ -40,6 +42,10 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
             'kartik\\date\\' => 12,
             'kartik\\cmenu\\' => 13,
             'kartik\\base\\' => 12,
+        ),
+        'd' => 
+        array (
+            'dosamigos\\arrayquery\\' => 21,
         ),
         'c' => 
         array (
@@ -95,6 +101,10 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-swiftmailer/src',
         ),
+        'yii\\jui\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-jui',
+        ),
         'yii\\gii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-gii/src',
@@ -118,6 +128,10 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
+        ),
+        'yii2mod\\rbac\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yii2mod/yii2-rbac',
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
@@ -152,6 +166,10 @@ class ComposerStaticInit96881eacbfdc41aa8a6abc8890537fe5
         'kartik\\base\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base',
+        ),
+        'dosamigos\\arrayquery\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-arrayquery-component/src',
         ),
         'cebe\\markdown\\' => 
         array (

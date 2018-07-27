@@ -16,7 +16,14 @@ return [
     'modules' => [
         'datecontrol' =>  [
             'class' => '\kartik\datecontrol\Module',
-        ]
+        ],
+        'rbac' => [
+            'class' => 'yii2mod\rbac\Module',
+        ],
+    ],
+    'as access' => [
+        'class' => 'yii2mod\rbac\filters\AccessControl',
+        'allowActions' => ['site/login','site/logout']
     ],
     'components' => [
         'request' => [
@@ -50,6 +57,23 @@ return [
             'username' => 'root',
             'password' => '123456',
             'charset' => 'utf8',
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'db' => 'tj',
+            'defaultRoles' => ['guest', 'user'],
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages', // if advanced application, set @frontend/messages
+                    'sourceLanguage' => 'en',
+                    'fileMap' => [
+                        //'main' => 'main.php',
+                    ],
+                ],
+            ],
         ],
         /*
         'urlManager' => [

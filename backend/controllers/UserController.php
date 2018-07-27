@@ -3,11 +3,10 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\User;
+use common\models\User;
 use app\models\search\UserSearch;
 use backend\library\BaseController as Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -51,8 +50,9 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->setPassword(Yii::$app->request->post()['User']['password_hash']);
+            if($model->save())
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -72,7 +72,9 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->setPassword(Yii::$app->request->post()['User']['password_hash']);
+            if($model->save())
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

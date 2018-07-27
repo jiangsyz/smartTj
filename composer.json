@@ -22,7 +22,8 @@
         "kartik-v/yii2-widget-datetimepicker": "^1.4",
         "kartik-v/yii2-widget-datepicker": "^1.4",
         "kartik-v/yii2-widget-sidenav": "^1.0",
-        "kartik-v/yii2-context-menu": "*"
+        "kartik-v/yii2-context-menu": "*",
+        "yii2mod/yii2-rbac": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
