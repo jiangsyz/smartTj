@@ -19,14 +19,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-3">
             <div  id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>访客数 : ?</h3>
+                    <h3>访客数 : <?=$uv?></h3>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>浏览量 : ?</h3>
+                    <h3>浏览量 : <?=$pv?></h3>
                 </div>
             </div>
         </div>
@@ -47,21 +47,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>付款金额 : <?=sprintf("%.2f",$pay_count)?></h3>
+                    <h3>付款金额 : <?=$pay_count?></h3>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>转化率 : ?</h3>
+                    <h3>转化率 : <?=$tran_rate?></h3>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div id="w6" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>客单价 : <?=sprintf("%.2f",$single_price)?></h3>
+                    <h3>客单价 : <?=$single_price?></h3>
                 </div>
             </div>
         </div>
