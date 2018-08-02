@@ -13,7 +13,8 @@ class IndexController extends Controller
         $today = date('Y-m-d');
         $yesterday = date('Y-m-d', strtotime("-1 day"));
         # 获取pv
-        $pv = LogService::getPvByDate($today);
+      //  $pv = LogService::getPvByDate($today);
+        $pv = 0;
         # 获取uv
         $uv = LogService::getUvByDate($today);
         # 今日每销售收入
@@ -30,7 +31,7 @@ class IndexController extends Controller
         # 客单价
         $single_price = !empty($pay_count) && !empty($member_count) ? sprintf("%.2f",round($pay_count/$member_count,2)) : 0;
         # 转化率
-        $tran_rate =  !empty($member_count) && !empty($uv) ? sprintf("%.2f",$member_count/$uv).'%' : '0'; 
+        $tran_rate =  !empty($member_count) && !empty($uv) ? sprintf("%.2f",$member_count/$uv * 100).'%' : '0';
         $start_date = $this->getGet('start_date',date('Y-m-d',strtotime("-7 day")));
         $end_date = $this->getGet('end_date',date('Y-m-d'));
         if (strtotime($end_date) > time()) {
