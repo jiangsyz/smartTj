@@ -52,4 +52,27 @@ class LogService extends Service
             return 0;
         }
     }
+
+    public static function getTodayUv()
+    {
+        try
+        {
+            $today = date('Y-m-d');
+            $start_time = strtotime($today.' 00:00:00');
+            if(empty($start_time)){
+                throw new \Exception('date error');
+            }
+            $data = ActionTracker::find()->select('count(distinct(sourceId)) as uv')->where([
+                'sourceType' => 3,
+            ])
+                ->andWhere(['>=', 'requestTime', $start_time])
+                ->asArray()
+                ->one();
+            return (empty($data['uv'])) ? 0 : $data['uv'];
+        }
+        catch(\Exception $e){
+
+            return 0;
+        }
+    }
 }
