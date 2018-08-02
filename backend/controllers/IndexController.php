@@ -16,7 +16,8 @@ class IndexController extends Controller
       //  $pv = LogService::getPvByDate($today);
         $pv = 0;
         # 获取uv
-        $uv = LogService::getUvByDate($today);
+       // $uv = LogService::getUvByDate($today);
+        $uv = 0;
         # 今日每销售收入
         $today_hour_income = OrderService::getHourIncomeByDate($today);
         # 昨日每销售收入
