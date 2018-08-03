@@ -25,6 +25,11 @@ class Sku extends \yii\db\ActiveRecord
         return 'sku';
     }
 
+    public function getSpu()
+    {
+        return $this->hasOne(Spu::className(), array('id' => 'spuId'));
+    }
+
     /**
      * {@inheritdoc}
      */

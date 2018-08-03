@@ -1,9 +1,13 @@
 <?php
 namespace backend\controllers;
+use app\models\OrderRecord;
+use app\models\Sku;
 use backend\library\BaseController as Controller;
 use backend\library\service\ItemService;
 use Yii;
 use yii\data\ArrayDataProvider;
+use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
 
 class GoodsController extends Controller
 {
@@ -78,5 +82,67 @@ class GoodsController extends Controller
                 ]),
             ]);
         }
+    }
+
+    public function actionPendingDetail()
+    {
+        $sku_id = $this->getGet('sku_id', 1);
+        $sku = Sku::find()->where(['id' => $sku_id])->one();
+        if (!$sku) {
+            throw new NotFoundHttpException('sku not found');
+        }
+        $sub_order = ItemService::getPendingDetail($sku_id);
+        $sub_order_info = [];
+        foreach($sub_order as $v){
+            $sub_order_info[$v['orderId']] = $v['buyingCount'];
+        }
+        $sub_order_ids = array_keys($sub_order_info);
+        $list = OrderRecord::find()->select('id,parentId')->where(['id' => $sub_order_ids])->asArray()->all();
+        foreach($list as $k=>$v){
+            $list[$k]['buyingCount'] = ArrayHelper::getValue($sub_order_info,$v['id'],0);
+        }
+        return $this->render('pending-detail', [
+            'sku' => $sku,
+            'dataProvider' => new ArrayDataProvider([
+                'allModels' => $list,
+                'pagination' => [
+                    'pageSize' => 30,
+                ],
+            ]),
+        ]);
+    }
+
+    /**
+     * 待配货详情
+     *
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionPrepareDetail()
+    {
+        $sku_id = $this->getGet('sku_id', 1);
+        $sku = Sku::find()->where(['id' => $sku_id])->one();
+        if (!$sku) {
+            throw new NotFoundHttpException('sku not found');
+        }
+        $sub_order = ItemService::getPrepareDetail($sku_id);
+        $sub_order_info = [];
+        foreach($sub_order as $v){
+            $sub_order_info[$v['orderId']] = $v['buyingCount'];
+        }
+        $sub_order_ids = array_keys($sub_order_info);
+        $list = OrderRecord::find()->select('id,parentId')->where(['id' => $sub_order_ids])->asArray()->all();
+        foreach($list as $k=>$v){
+            $list[$k]['buyingCount'] = ArrayHelper::getValue($sub_order_info,$v['id'],0);
+        }
+        return $this->render('prepare-detail', [
+            'sku' => $sku,
+            'dataProvider' => new ArrayDataProvider([
+                'allModels' => $list,
+                'pagination' => [
+                    'pageSize' => 30,
+                ],
+            ]),
+        ]);
     }
 }

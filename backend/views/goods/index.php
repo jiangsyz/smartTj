@@ -40,16 +40,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => '待发货数量',
+                'format' => 'raw',
                 'attribute' => 'buy_count',
                 'value'     => function ($model) {
-                    return $model['buy_count'];
+                    return $model['buy_count'] ? Html::a($model['buy_count'],\yii\helpers\Url::toRoute(['goods/pending-detail','sku_id'=>$model['id']])) : 0;
                 }
             ],
             [
                 'label' => '配货中数量',
+                'format' => 'raw',
                 'attribute' => 'prepare_count',
                 'value'     => function ($model) {
-                    return $model['prepare_count'];
+                    return $model['prepare_count'] ? Html::a($model['prepare_count'],\yii\helpers\Url::toRoute(['goods/prepare-detail','sku_id'=>$model['id']])) : 0;
                 }
             ],
         ],

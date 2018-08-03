@@ -1,5 +1,6 @@
 <?php
 namespace backend\library\service;
+use app\models\OrderBuyingRecord;
 use app\models\OrderRecord;
 use app\models\Refund;
 use app\models\Sku;
@@ -109,6 +110,42 @@ class ItemService extends Service
     }
 
     /**
+     * 待发货详情
+     *
+     * @param $sku_id
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function getPendingDetail($sku_id)
+    {
+        try {
+            $pay_order_ids = OrderRecord::find()
+                ->where(['deliverStatus' => 0])
+                ->andWhere(['cancelStatus' => 0])
+                ->andWhere(['payStatus' => 1])
+                ->andWhere(['closeStatus' => 0])
+                ->andWhere(['finishStatus' => 0])
+                ->asArray()
+                ->column();
+            if (empty($pay_order_ids)) {
+                throw new \Exception('pay_order is empty');
+            }
+            $sub_order_ids = OrderRecord::find()->select('id')->where(['parentId' => $pay_order_ids])->asArray()->column();
+            if (empty($sub_order_ids)) {
+                throw new \Exception('sub_pay_order is empty');
+            }
+            $list = OrderBuyingRecord::find()->select('orderId,buyingCount')
+                ->where('logisticsCode is NULL')
+                ->andWhere(['sourceId' =>$sku_id])
+                ->andWhere(['sourceType' =>2])
+                ->andWhere(['orderId' =>$sub_order_ids])
+                ->asArray()->all();
+            return $list;
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
+    /**
      * 获取准备发货
      *
      * @return array
@@ -140,6 +177,42 @@ class ItemService extends Service
                 $prepare_data[$v['sourceId']] = $v['buy_count'];
             }
             return $prepare_data;
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
+    /**
+     * 待配货详情
+     *
+     * @param $sku_id
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function getPrepareDetail($sku_id)
+    {
+        try {
+            $pay_order_ids = OrderRecord::find()
+                ->where(['>', 'deliverStatus', 0])
+                ->andWhere(['cancelStatus' => 0])
+                ->andWhere(['payStatus' => 1])
+                ->andWhere(['closeStatus' => 0])
+                ->andWhere(['finishStatus' => 0])
+                ->asArray()
+                ->column();
+            if (empty($pay_order_ids)) {
+                throw new \Exception('pay_order is empty');
+            }
+            $sub_order_ids = OrderRecord::find()->select('id')->where(['parentId' => $pay_order_ids])->asArray()->column();
+            if (empty($sub_order_ids)) {
+                throw new \Exception('sub_pay_order is empty');
+            }
+            $list = OrderBuyingRecord::find()->select('orderId,buyingCount')
+                ->where('logisticsCode is NULL')
+                ->andWhere(['sourceId' =>$sku_id])
+                ->andWhere(['sourceType' =>2])
+                ->andWhere(['orderId' =>$sub_order_ids])
+                ->asArray()->all();
+            return $list;
         } catch (\Exception $e) {
             return [];
         }
