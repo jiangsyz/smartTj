@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'attribute' => 'buy_count',
                 'value'     => function ($model) {
-                    return $model['buy_count'] ? Html::a($model['buy_count'],\yii\helpers\Url::toRoute(['goods/pending-detail','sku_id'=>$model['id']])) : 0;
+                    return $model['buy_count'] ? Html::a($model['buy_count'],\yii\helpers\Url::toRoute(['goods/pending-detail','sku_id'=>$model['id']]),['target' => '_blank']) : 0;
                 }
             ],
             [
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'attribute' => 'prepare_count',
                 'value'     => function ($model) {
-                    return $model['prepare_count'] ? Html::a($model['prepare_count'],\yii\helpers\Url::toRoute(['goods/prepare-detail','sku_id'=>$model['id']])) : 0;
+                    return $model['prepare_count'] ? Html::a($model['prepare_count'],\yii\helpers\Url::toRoute(['goods/prepare-detail','sku_id'=>$model['id']]),['target' => '_blank']) : 0;
                 }
             ],
         ],
