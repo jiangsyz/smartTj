@@ -113,8 +113,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <?php ActiveForm::end(); ?>
         </div></div>
-</div>
 
+</div>
+<div class="panel panel-default">
+<div class="panel-footer">
+    <h4>总收入 : <?php echo array_sum($day_income);?></h4>
+</div>
+</div>
 
 <canvas height="100"  id="chart2"  ></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
