@@ -19,7 +19,7 @@ class IndexController extends Controller
         # 获取uv
         $uv = LogService::getTodayUv();
         # 今日每销售收入 昨日每销售收入
-        $fun = ($chart_type == 'line') ? 'getHourIncomeByDate' : 'getHourPayOrderByDate';
+        $fun = ($chart_type == 'line') ? 'getHourIncomeByDate' : 'getHourIncomeByDateV2';
         $today_hour_income = call_user_func_array(array('backend\library\service\OrderService', $fun), array($today));
         $yesterday_hour_income = call_user_func_array(array('backend\library\service\OrderService', $fun), array($yesterday));
         # 获取订单总数

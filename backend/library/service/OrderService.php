@@ -113,6 +113,17 @@ class OrderService extends Service
         return $return;
     }
 
+    public static function getHourIncomeByDateV2($date)
+    {
+        $return = [];
+        $data = self::getHourPayOrderByDate($date);
+        for ($i = 0; $i < 24; $i++) {
+            $hour_income = ArrayHelper::getValue($data, $i, 0);
+            $return[$i] = $hour_income;
+        }
+        return $return;
+    }
+
     /**
      * 日期范围获取收入
      *
