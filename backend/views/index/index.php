@@ -128,7 +128,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <canvas height="100"  id="chart2"  ></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <?php
-$hours = array_keys($today_hour_income);
+$hours = [];
+for ($i = 0; $i < 24; $i++) {
+    $hours[] = $i;
+} 
 $days = array_keys($day_income);
 
 $today_income = array_values($today_hour_income);
