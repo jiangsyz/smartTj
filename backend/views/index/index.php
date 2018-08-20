@@ -67,6 +67,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<ul class="nav nav-tabs">
+    <li <?php if($chart_type == 'line') echo 'class="active"';?>><a href="<?php echo \yii\helpers\Url::toRoute(['index/index','chart_type'=>'line'])?>">线型</a></li>
+    <li <?php if($chart_type == 'bar') echo 'class="active"';?>><a href="<?php echo \yii\helpers\Url::toRoute(['index/index','chart_type'=>'bar'])?>">柱状</a></li>
+</ul>
 <canvas height="100"  id="chart1"  ></canvas>
 <div class="page-header">
     <h1>核心指标
@@ -141,7 +145,7 @@ foreach($today_income as $k=>$v){
     var ctx = document.getElementById("chart1");
     new Chart(ctx, {
         // The type of chart we want to create
-        type: 'line',
+        type: '<?php echo $chart_type;?>',
 
         // The data for our dataset
         data: {

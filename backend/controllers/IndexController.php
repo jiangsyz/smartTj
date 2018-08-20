@@ -10,6 +10,7 @@ class IndexController extends Controller
 {
     public function actionIndex()
     {
+        $chart_type = $this->getGet('chart_type','line');
         $today = date('Y-m-d');
         $yesterday = date('Y-m-d', strtotime("-1 day"));
         # 获取pv
@@ -17,10 +18,10 @@ class IndexController extends Controller
         $pv = 0;
         # 获取uv
         $uv = LogService::getTodayUv();
-        # 今日每销售收入
-        $today_hour_income = OrderService::getHourIncomeByDate($today);
-        # 昨日每销售收入
-        $yesterday_hour_income = OrderService::getHourIncomeByDate($yesterday);
+        # 今日每销售收入 昨日每销售收入
+        $fun = ($chart_type == 'line') ? 'getHourIncomeByDate' : 'getHourPayOrderByDate';
+        $today_hour_income = call_user_func_array(array('backend\library\service\OrderService', $fun), array($today));
+        $yesterday_hour_income = call_user_func_array(array('backend\library\service\OrderService', $fun), array($yesterday));
         # 获取订单总数
         $order_count = OrderService::getOrderCountBy($today);
         # 获取付款人数
@@ -41,6 +42,7 @@ class IndexController extends Controller
         $day_income = OrderService::getDateIncomeByRange($start_date,$end_date);
 
         return $this->render('index', compact(
+                'chart_type',
                 'tran_rate',
                 'uv',
                 'pv',
